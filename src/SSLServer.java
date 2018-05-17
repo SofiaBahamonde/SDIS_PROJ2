@@ -14,15 +14,23 @@ public class SSLServer {
     ss.setNeedClientAuth(true);
     ss.setEnabledCipherSuites(ssf.getSupportedCipherSuites());
     
-    
-    Socket s = ss.accept();
+    while(true) {
+      SSLSocket client = (SSLSocket) ss.accept();
+      System.out.println("New Player");
+    }
+
+    /*
     BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
     String line = null;
-    while (((line = in.readLine()) != null)) {
-      System.out.println(line);
+    while (true) {
+      if(((line = in.readLine()) != null))
+       System.out.println(line);
     }
+
     in.close();
     s.close();
+
+    */
   }
 }
 

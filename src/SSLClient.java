@@ -11,13 +11,15 @@ public class SSLClient {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
     SSLSocket s = (SSLSocket) sf.createSocket(HOST, PORT);
     s.setEnabledCipherSuites(sf.getSupportedCipherSuites());
-    
+
+    /*
     OutputStream out = s.getOutputStream();
     out.write("\nConnection established.\n\n".getBytes());
     out.flush();
     int theCharacter = 0;
     theCharacter = System.in.read();
-    
+
+
     while (theCharacter != '~') // The '~' is an escape character to exit
     {
       out.write(theCharacter);
@@ -26,6 +28,7 @@ public class SSLClient {
     }
 
     out.close();
+    */
     s.close();
   }
 }
