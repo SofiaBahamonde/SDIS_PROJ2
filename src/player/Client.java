@@ -2,32 +2,52 @@ package player;
 
 import javax.net.ssl.*;
 
+import ui.ServerUI;
 import utils.Utils;
 
-import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 
 
 public class Client {
 
-  public static void main(String[] args) throws Exception {
+    static PrintStream out;
+    static BufferedReader in;
+
+    public static void main(String[] args) throws Exception {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
-    SSLSocket s = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
-    s.setEnabledCipherSuites(sf.getSupportedCipherSuites());
+    SSLSocket socket = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
+    socket.setEnabledCipherSuites(sf.getSupportedCipherSuites());
 
+    Client c = new Client();
 
-    OutputStream out = s.getOutputStream();
-    int theCharacter = 0;
-    theCharacter = System.in.read();
+    c.out = new PrintStream(socket.getOutputStream());
+    c.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-    while (theCharacter != '~') // The '~' is an escape character to exit
-    {
-      out.write(theCharacter);
-      out.flush();
-      theCharacter = System.in.read();
+    String request = null;
+    while (((request = in.readLine()) != null)) {
+        parseRequest(request);
     }
 
+    in.close();
     out.close();
-
-    s.close();
+    socket.close();
   }
+
+    private static void parseRequest(String request) {
+        switch (request){
+            case "USERNAME":
+                String username = ServerUI.welcome();
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static void sendResponse(String response){
+        out.println(response);
+        out.flush();
+    }
 }
