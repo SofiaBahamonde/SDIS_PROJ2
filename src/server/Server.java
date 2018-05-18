@@ -1,12 +1,17 @@
 package server;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+
 import javax.net.ssl.*;
 
 import utils.Utils;
+import player.PlayerID;
 
 public class Server{
-
-
+	
+	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	
     public static void main(String[] args) throws Exception {
 
     SSLServerSocketFactory ssf = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -23,10 +28,19 @@ public class Server{
     }
 
 
-
     //s.close();
 
-
     }
+    
+	public static void addPlayer(PlayerID player) {
+		players.add(player);
+		
+	}
+
+	public static ArrayList<PlayerID> getPlayers() {
+		return players;
+	}
+
+
 }
 

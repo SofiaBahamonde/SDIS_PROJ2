@@ -41,6 +41,9 @@ public class Player {
                 String username = ServerUI.welcome();
                 sendResponse(username);
                 break;
+            case "MENU":
+            	String option = ServerUI.menu();
+            	sendResponse(option);
             default:
                 break;
         }

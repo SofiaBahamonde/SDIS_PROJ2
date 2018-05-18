@@ -15,4 +15,9 @@ public class ServerUI {
         String username = System.console().readLine();
         return username;
     }
+
+	public static String menu() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
