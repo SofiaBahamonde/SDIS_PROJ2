@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 
-public class Client {
+public class Player {
 
     static PrintStream out;
     static BufferedReader in;
@@ -20,14 +20,14 @@ public class Client {
     SSLSocket socket = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
     socket.setEnabledCipherSuites(sf.getSupportedCipherSuites());
 
-    Client c = new Client();
+    Player c = new Player();
 
     c.out = new PrintStream(socket.getOutputStream());
     c.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
     String request = null;
     while (((request = in.readLine()) != null)) {
-        parseRequest(request);
+        getRequest(request);
     }
 
     in.close();
@@ -35,11 +35,11 @@ public class Client {
     socket.close();
   }
 
-    private static void parseRequest(String request) {
+    private static void getRequest(String request) {
         switch (request){
-            case "USERNAME":
+            case "WELCOME":
                 String username = ServerUI.welcome();
-
+                sendResponse(username);
                 break;
             default:
                 break;

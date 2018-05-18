@@ -19,8 +19,7 @@ public class Server{
     
     while(true) {
       SSLSocket socket = (SSLSocket) ss.accept();
-      System.out.println("New player has join the server.");
-        new Thread( new Handler(socket)).start();
+      new Thread( new Handler(socket)).start();
     }
 
 
