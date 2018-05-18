@@ -9,6 +9,7 @@ import player.PlayerID;
 
 public class Server{
 	
+
 	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
 	static ArrayList<Room> rooms = new ArrayList<Room>();
 	
@@ -20,15 +21,11 @@ public class Server{
     ss.setNeedClientAuth(true);
     ss.setEnabledCipherSuites(ssf.getSupportedCipherSuites());
 
-
-    
     while(true) {
       SSLSocket socket = (SSLSocket) ss.accept();
-      new Thread( new Handler(socket)).start();
+      new Thread( new PlayerHandler(socket)).start();
     }
 
-
-    //s.close();
 
     }
     
@@ -36,10 +33,20 @@ public class Server{
 		players.add(player);
 		
 	}
+	
+	public static void addRoom(String name, String password, PlayerID owner) {
+		rooms.add(new Room(name, password,owner));	
+	}
 
 	public static ArrayList<PlayerID> getPlayers() {
 		return players;
 	}
+
+	public static ArrayList<Room> getRooms() {
+		return rooms;
+	}
+
+	
 
 
 }

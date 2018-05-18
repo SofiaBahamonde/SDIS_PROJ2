@@ -10,14 +10,15 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 
-public class Handler implements Runnable {
+public class PlayerHandler implements Runnable {
 
+	PlayerID player;
     SSLSocket socket;
     
     static PrintStream out;
     BufferedReader in;
 
-    public Handler(SSLSocket socket) {
+    public PlayerHandler(SSLSocket socket) {
         this.socket = socket;
     }
 
@@ -42,23 +43,32 @@ public class Handler implements Runnable {
   
     private void showMenu() {
     	try {
-			out = new PrintStream(socket.getOutputStream());
-	        sendRequest("MENU");
-	        
-	        String option = in.readLine();
-	        
-	        switch(option) {
-	        case "1":
-	        	sendRequest("SHOW_ROOM");
-	        	break;
-	        case "2":
-	        	sendRequest("NEW_ROOM");
-	        	break;
-	        default:
-	        	break;
-	        	
-	        }
-	        
+    		
+    		while(true) {
+				out = new PrintStream(socket.getOutputStream());
+		        sendRequest("MENU");
+		        
+		        String option = in.readLine();
+		        
+		        switch(option) {
+		        case "1":
+		        	sendRequest("SHOW_ROOMS");
+		        	break;
+		        case "2":
+		        	sendRequest("NEW_ROOM");
+		        	
+		        	String name = in.readLine();
+		        	String password = in.readLine();
+		        	
+		        	Server.addRoom(name, password,player);
+		        	
+		        	break;
+		        default:
+		        	break;
+		        	
+		        }	 
+    		}
+    		   		        
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,7 +84,9 @@ public class Handler implements Runnable {
            
            String username = in.readLine();
            
-           Server.addPlayer(new PlayerID(username, socket));
+           player = new PlayerID(username,socket);
+           
+           Server.addPlayer(player);
            System.out.println(username + " has joined the server.");
            
 

@@ -41,12 +41,21 @@ public class Player {
                 String username = ServerUI.welcome();
                 sendResponse(username);
                 break;
+                
             case "MENU":
             	String option = ServerUI.menu();
             	sendResponse(option);
             	break;
+            	
             case "NEW_ROOM":
-            	ServerUI.newRoom();
+            	String room_name = ServerUI.newRoom();
+            	sendResponse(room_name);
+            	String room_pw = ServerUI.password();
+            	sendResponse(room_pw);
+            	break;
+            	
+            case "SHOW_ROOMS":
+            	ServerUI.showRooms();
             	break;
             default:
                 break;

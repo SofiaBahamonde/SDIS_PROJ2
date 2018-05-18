@@ -16,4 +16,25 @@ public class Room {
 		this.password = password;
 		this.owner = owner;
 	}
+	
+	@Override
+	public String toString() {
+		String str ="";
+		
+		str += "ROOM - " + name + "\n";
+		str += "type: " + (isPrivate() ? "private" : "public") + "\n";
+		str += "owner: " + owner.toString() + "\n";
+		
+		for(PlayerID p:players) 
+			str += "  " + p.toString()+ "\n";
+		
+		
+		return str;
+	}
+	
+	
+	public boolean isPrivate() {
+		if(password.equals("")) return false;
+		return true;
+	}
 }

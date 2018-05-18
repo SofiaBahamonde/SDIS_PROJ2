@@ -1,5 +1,8 @@
 package ui;
 
+import server.Server;
+import utils.Utils;
+
 public class ServerUI {
 
 
@@ -27,10 +30,28 @@ public class ServerUI {
         return option;
 	}
 
-	public static void newRoom() {
+	public static String newRoom() {
 		System.out.print("\n");
 		System.out.print("\n");
 		System.out.print("------------ CREATE ROOM ------------\n");
+		System.out.print("\n");
+		System.out.print("Rooms must have a name, the passoword field is optional\n");
+        System.out.print("Room name: ");
+        
+        String name = System.console().readLine();
+        return name;
 		
+	}
+
+	public static String password() {
+		System.out.print("Password: ");
+		
+		String password = System.console().readLine();
+		return password;
+	}
+	
+	public static void showRooms() {
+		Utils.printArray(Server.getRooms());
+		 String name = System.console().readLine();
 	}
 }
