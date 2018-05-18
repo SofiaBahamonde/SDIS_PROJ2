@@ -88,14 +88,7 @@ public class GameLogic {
 		}
 	}
 	
-	public static void main(String [] args) throws Exception {
-	GameLogic gl=new GameLogic("black_cards.txt","white_cards.txt");
-	ArrayList<White_Card> bc=gl.makePlay(30);
+
 	
-for(int i=0; i< bc.size();i++) {
-	
-	System.out.println(bc.get(i).getText());
-	}
-	}
 
 }
