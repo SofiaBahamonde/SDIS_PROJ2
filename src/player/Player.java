@@ -44,6 +44,10 @@ public class Player {
             case "MENU":
             	String option = ServerUI.menu();
             	sendResponse(option);
+            	break;
+            case "NEW_ROOM":
+            	ServerUI.newRoom();
+            	break;
             default:
                 break;
         }

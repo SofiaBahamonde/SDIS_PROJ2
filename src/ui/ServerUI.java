@@ -1,13 +1,11 @@
 package ui;
 
-import java.io.PrintStream;
-
 public class ServerUI {
 
 
     public static String welcome(){
 
-        System.out.print("--------- CARDS AGAINST SDIS --------- \n");
+        System.out.print("--------- CARDS AGAINST SDIS --------\n");
         System.out.print("\n");
         System.out.print("Welcome, please choose your username\n");
         System.out.print("Username: ");
@@ -17,7 +15,22 @@ public class ServerUI {
     }
 
 	public static String menu() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("---------------- MENU ----------------\n");
+        System.out.print("1 - Enter Room\n");
+        System.out.print("2 - Create Room\n");
+        System.out.print("Option: ");
+        
+        String option = System.console().readLine();
+        return option;
+	}
+
+	public static void newRoom() {
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("------------ CREATE ROOM ------------\n");
+		
 	}
 }

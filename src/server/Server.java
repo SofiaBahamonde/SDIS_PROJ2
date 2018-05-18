@@ -1,7 +1,6 @@
 package server;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import javax.net.ssl.*;
 
@@ -11,6 +10,7 @@ import player.PlayerID;
 public class Server{
 	
 	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	static ArrayList<Room> rooms = new ArrayList<Room>();
 	
     public static void main(String[] args) throws Exception {
 
