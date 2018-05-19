@@ -21,6 +21,8 @@ public class Room {
 	public String toString() {
 		String str ="";
 		
+		str += "\n--------------------------------------\n"; 
+		
 		str += "ROOM - " + name + "\n";
 		str += "type: " + (isPrivate() ? "private" : "public") + "\n";
 		str += "owner: " + owner.toString() + "\n";
@@ -28,6 +30,7 @@ public class Room {
 		for(PlayerID p:players) 
 			str += "  " + p.toString()+ "\n";
 		
+		str += "--------------------------------------\n"; 
 		
 		return str;
 	}

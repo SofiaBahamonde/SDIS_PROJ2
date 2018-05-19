@@ -23,18 +23,20 @@ public class Server{
 
     while(true) {
       SSLSocket socket = (SSLSocket) ss.accept();
-      new Thread( new PlayerHandler(socket)).start();
+      new Thread( new RoomHandler(socket)).start();
     }
 
 
     }
     
 	public static void addPlayer(PlayerID player) {
+		System.out.println("New player has join the server - " + player.toString());
 		players.add(player);
 		
 	}
 	
 	public static void addRoom(String name, String password, PlayerID owner) {
+		System.out.println("New room created - " + name);
 		rooms.add(new Room(name, password,owner));	
 	}
 
