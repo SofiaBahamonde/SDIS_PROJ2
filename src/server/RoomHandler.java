@@ -35,14 +35,18 @@ public class RoomHandler implements Runnable {
 		}
 
     	
-    	logUser();
-    	showMenu();
+    	log();
+    	menu();
 
 
     }
     
+    private void room() {
+    	
+    }
+    
   
-    private void showMenu() {
+    private void menu() {
     	try {
     		
     		while(true) {
@@ -60,21 +64,45 @@ public class RoomHandler implements Runnable {
 		        	break;
 		        
 		        case "2":
+		        	sendRequest("ENTER_ROOM");
+		        	String room_name2 = in.readLine();
+		        	
+		        	Room room = Server.getRoom(room_name2);
+		        	
+		        	if(room !=null) {
+		        		if(room.isPrivate())
+		        			sendRequest("PW");
+		        			String password2 = in.readLine();
+		        			
+		        			if(!room.getPassword().equals(password2)) {
+		        				sendRequest("EEROR: INVALID_PW");
+		        				break;
+		        			}
+		        	}else {
+		        		sendRequest("ERROR: INVALID_ROOM");
+		        		break;
+		        	}
+		        	
+		        	room.addPlayer(player);
+		        	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
+		        	
+		        	sendRequest("SUCCESS");
+		        	room();
+		        	
+		        	break;
+		        
+		        case "3":
 		        	sendRequest("NEW_ROOM");
 		        	
-		        	String name = in.readLine();
-		        	String password = in.readLine();
+		        	String room_name1 = in.readLine();
+		        	String password1 = in.readLine();
 		        	
-		        	Server.addRoom(name, password,player);
+		        	Server.addRoom(room_name1, password1,player);
 		        	
-		        	break;
-		        	
-		        case "3":
-		        	sendRequest("ENTER_ROOM");
-		        	
-		        
+		        	room();
 		        	
 		        	break;
+
 		        default:
 		        	break;
 		        	
@@ -89,7 +117,7 @@ public class RoomHandler implements Runnable {
 		
 	}
 
-	private void logUser() {
+	private void log() {
 	   try {
            
            sendRequest("WELCOME");

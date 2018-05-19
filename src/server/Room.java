@@ -21,12 +21,13 @@ public class Room {
 	public String toString() {
 		String str ="";
 		
-		str += "\n--------------------------------------\n"; 
+		str += "--------------------------------------\n"; 
 		
 		str += "ROOM - " + name + "\n";
 		str += "type: " + (isPrivate() ? "private" : "public") + "\n";
 		str += "owner: " + owner.toString() + "\n";
 		
+		str += "players:\n";
 		for(PlayerID p:players) 
 			str += "  " + p.toString()+ "\n";
 		
@@ -35,9 +36,20 @@ public class Room {
 		return str;
 	}
 	
+	public String getName() {
+		return name;
+	}
 	
 	public boolean isPrivate() {
 		if(password.equals("")) return false;
 		return true;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void addPlayer(PlayerID player) {
+		players.add(player);
 	}
 }

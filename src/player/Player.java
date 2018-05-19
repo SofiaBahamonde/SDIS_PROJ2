@@ -55,20 +55,32 @@ public class Player {
             	break;
             	
             case "NEW_ROOM":
-            	String room_name = ServerUI.newRoom();
-            	sendResponse(room_name);
+            	String room_name1 = ServerUI.newRoom();
+            	sendResponse(room_name1);
             	String room_pw = ServerUI.password();
             	sendResponse(room_pw);
             	break;
             	
             case "SHOW_ROOMS":
+            	ServerUI.showRooms();
             	String data = in.readLine();
                 while (!data.equals("STOP_SHOW")){
-                	System.out.print(data);
+                	System.out.println(data);
                 	data = in.readLine();
                 }
-
             	break;
+            case "ENTER_ROOM":
+            	String room_name2 = ServerUI.enterRoom();
+            	sendResponse(room_name2);
+            
+            	if(in.readLine().equals("PW")) {
+            		String password2 = ServerUI.password();
+            		sendResponse(password2);
+            	}
+            	
+            	String result = in.readLine();
+            	System.out.println(result);
+            	
             default:
                 break;
         }
