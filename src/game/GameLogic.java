@@ -5,7 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
+
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
+import peer_comunication.DesEncrypter;
+import peer_comunication.SecretKeyGenerator;
 
 
 public class GameLogic {
@@ -87,6 +94,28 @@ public class GameLogic {
 			System.out.println(black_cards_database.get(i).getText());
 		}
 	}
+	
+//	public static void main(String [] args) throws Exception {
+//		GameLogic gl=new GameLogic("black_cards.txt","white_cards.txt");
+//		ArrayList<White_Card> bc=gl.makePlay(30);
+//		SecretKey secretKey=SecretKeyGenerator.generateSecretKey();
+//		String ola =SecretKeyGenerator.keyToString(secretKey);
+//		secretKey =SecretKeyGenerator.decodeKeyFromString(ola);
+//		System.out.println("KEY "+ola);
+//		DesEncrypter des= new DesEncrypter(secretKey);
+//	for(int i=0; i< bc.size();i++) {
+//		System.out.println("ORIGINAL:");
+//		System.out.println(bc.get(i).getText());
+//		System.out.println("ENCRYPTED:");
+//		String temp=des.encrypt(bc.get(i).getText());
+//		System.out.println(temp);
+//		System.out.println("DESENCRYPTED:");
+//		temp=des.decrypt(temp);
+//		System.out.println(temp);
+//		
+//	
+//		}
+//	}
 	
 
 	

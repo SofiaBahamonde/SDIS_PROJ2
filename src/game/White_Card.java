@@ -6,5 +6,4 @@ public class White_Card extends Card{
 		super(text);
 		// TODO Auto-generated constructor stub
 	}
-
 }
