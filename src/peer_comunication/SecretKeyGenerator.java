@@ -1,4 +1,4 @@
-package utils;
+package peer_comunication;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;

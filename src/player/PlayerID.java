@@ -6,6 +6,7 @@ public class PlayerID {
 	
 	String username;
 	SSLSocket socket;
+	private int player_id;
 	
 	public PlayerID(String username, SSLSocket socket) {
 		this.username = username;

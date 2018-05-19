@@ -2,6 +2,7 @@ package player;
 
 import javax.net.ssl.*;
 
+import game.White_Card;
 import ui.ServerUI;
 import utils.Utils;
 
@@ -9,12 +10,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 
 public class Player {
 
     static PrintStream out;
     static BufferedReader in;
+    private ArrayList<White_Card> current_cards;
+    private int score;
 
     public static void main(String[] args) throws Exception {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
