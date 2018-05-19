@@ -35,10 +35,14 @@ public class RoomHandler implements Runnable {
 		}
 
     	
-    	logUser();
+    	log();
     	menu();
 
 
+    }
+    
+    private void room() {
+    	
     }
     
   
@@ -81,7 +85,9 @@ public class RoomHandler implements Runnable {
 		        	
 		        	room.addPlayer(player);
 		        	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
+		        	
 		        	sendRequest("SUCCESS");
+		        	room();
 		        	
 		        	break;
 		        
@@ -92,6 +98,8 @@ public class RoomHandler implements Runnable {
 		        	String password1 = in.readLine();
 		        	
 		        	Server.addRoom(room_name1, password1,player);
+		        	
+		        	room();
 		        	
 		        	break;
 
@@ -109,7 +117,7 @@ public class RoomHandler implements Runnable {
 		
 	}
 
-	private void logUser() {
+	private void log() {
 	   try {
            
            sendRequest("WELCOME");
