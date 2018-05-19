@@ -4,6 +4,7 @@ import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
 import game.White_Card;
+import peer_comunication.MessageDispatcher;
 import ui.ServerUI;
 import utils.Utils;
 
@@ -21,8 +22,13 @@ public class Player {
     private ArrayList<White_Card> current_cards;
     private int score;
     private SecretKey secretKey;
+    private static MessageDispatcher dispatcher;
 
-    public static void main(String[] args) throws Exception {
+    public static MessageDispatcher getDispatcher() {
+		return dispatcher;
+	}
+
+	public static void main(String[] args) throws Exception {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
     SSLSocket socket = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
     socket.setEnabledCipherSuites(sf.getSupportedCipherSuites());

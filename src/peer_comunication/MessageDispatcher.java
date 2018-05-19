@@ -1,6 +1,7 @@
 package peer_comunication;
 
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
@@ -36,6 +37,17 @@ public class MessageDispatcher implements Runnable{
 		byte[] buffer= new byte[PACKET_SIZE];
 		connect_to_multicast_socket();
 		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void sendMessage(byte[] packet) {
+		DatagramPacket dpacket=new DatagramPacket(packet,packet.length,mc_address,mc_port);
+		try {
+			mc_socket.send(dpacket);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -6,6 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import player.Player;
+
 public class Message {
 	
 	public static final String CRLF = "\r"+"\n";
@@ -19,6 +21,7 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
 			
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
@@ -30,6 +33,7 @@ public class Message {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public static void WHITECARD(String content,int senderID,SecretKey secretKey) {
