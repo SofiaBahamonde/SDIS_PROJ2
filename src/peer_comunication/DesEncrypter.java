@@ -18,13 +18,9 @@ public class DesEncrypter {
     public DesEncrypter(SecretKey key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         
             ecipher = Cipher.getInstance("AES");
-            System.out.println("ola");
             dcipher = Cipher.getInstance("AES");
-            System.out.println("ola");
             ecipher.init(Cipher.ENCRYPT_MODE, key);
-            System.out.println("ola");
             dcipher.init(Cipher.DECRYPT_MODE, key);
-            System.out.println("ola");
        
     }
     

@@ -1,5 +1,6 @@
 package player;
 
+import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
 import game.White_Card;
@@ -19,6 +20,7 @@ public class Player {
     static BufferedReader in;
     private ArrayList<White_Card> current_cards;
     private int score;
+    private SecretKey secretKey;
 
     public static void main(String[] args) throws Exception {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
