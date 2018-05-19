@@ -7,6 +7,7 @@ import ui.ServerUI;
 import utils.Utils;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class Player {
 
     String request = null;
     while (((request = in.readLine()) != null)) {
-        getRequest(request);
+        paseRequest(request);
     }
 
     in.close();
@@ -39,7 +40,7 @@ public class Player {
     socket.close();
   }
 
-    private static void getRequest(String request) {
+    private static void paseRequest(String request) throws IOException {
         switch (request){
             case "WELCOME":
                 String username = ServerUI.welcome();
@@ -59,7 +60,12 @@ public class Player {
             	break;
             	
             case "SHOW_ROOMS":
-            	ServerUI.showRooms();
+            	String data = in.readLine();
+                while (!data.equals("STOP_SHOW")){
+                	System.out.print(data);
+                	data = in.readLine();
+                }
+
             	break;
             default:
                 break;

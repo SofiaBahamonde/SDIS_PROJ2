@@ -3,6 +3,7 @@ package server;
 import javax.net.ssl.SSLSocket;
 
 import player.PlayerID;
+import utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 
-public class PlayerHandler implements Runnable {
+public class RoomHandler implements Runnable {
 
 	PlayerID player;
     SSLSocket socket;
@@ -18,7 +19,7 @@ public class PlayerHandler implements Runnable {
     static PrintStream out;
     BufferedReader in;
 
-    public PlayerHandler(SSLSocket socket) {
+    public RoomHandler(SSLSocket socket) {
         this.socket = socket;
     }
 
@@ -53,7 +54,11 @@ public class PlayerHandler implements Runnable {
 		        switch(option) {
 		        case "1":
 		        	sendRequest("SHOW_ROOMS");
+		        	sendRequest(Utils.toStringArray(Server.getRooms()));
+		        	sendRequest("STOP_SHOW");
+
 		        	break;
+		        
 		        case "2":
 		        	sendRequest("NEW_ROOM");
 		        	
@@ -61,6 +66,13 @@ public class PlayerHandler implements Runnable {
 		        	String password = in.readLine();
 		        	
 		        	Server.addRoom(name, password,player);
+		        	
+		        	break;
+		        	
+		        case "3":
+		        	sendRequest("ENTER_ROOM");
+		        	
+		        
 		        	
 		        	break;
 		        default:
@@ -87,7 +99,6 @@ public class PlayerHandler implements Runnable {
            player = new PlayerID(username,socket);
            
            Server.addPlayer(player);
-           System.out.println(username + " has joined the server.");
            
 
        } catch (IOException e) {

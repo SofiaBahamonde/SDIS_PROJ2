@@ -1,14 +1,13 @@
 package ui;
 
-import server.Server;
-import utils.Utils;
-
 public class ServerUI {
 
 
     public static String welcome(){
 
-        System.out.print("--------- CARDS AGAINST SDIS --------\n");
+    	System.out.print("\n");
+    	System.out.print("\n");
+        System.out.print("--------- CARDS AGAINST SDIS ---------\n");
         System.out.print("\n");
         System.out.print("Welcome, please choose your username\n");
         System.out.print("Username: ");
@@ -22,8 +21,9 @@ public class ServerUI {
 		System.out.print("\n");
 		System.out.print("\n");
 		System.out.print("---------------- MENU ----------------\n");
-        System.out.print("1 - Enter Room\n");
-        System.out.print("2 - Create Room\n");
+        System.out.print("1 - Show Rooms\n");
+        System.out.print("2 - Enter Room\n");
+        System.out.print("3 - Create Room\n");
         System.out.print("Option: ");
         
         String option = System.console().readLine();
@@ -33,7 +33,7 @@ public class ServerUI {
 	public static String newRoom() {
 		System.out.print("\n");
 		System.out.print("\n");
-		System.out.print("------------ CREATE ROOM ------------\n");
+		System.out.print("------------ CREATE ROOM -------------\n");
 		System.out.print("\n");
 		System.out.print("Rooms must have a name, the passoword field is optional\n");
         System.out.print("Room name: ");
@@ -50,8 +50,5 @@ public class ServerUI {
 		return password;
 	}
 	
-	public static void showRooms() {
-		Utils.printArray(Server.getRooms());
-		 String name = System.console().readLine();
-	}
+
 }
