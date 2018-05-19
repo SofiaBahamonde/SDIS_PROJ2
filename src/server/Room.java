@@ -35,9 +35,16 @@ public class Room {
 		return str;
 	}
 	
+	public String getName() {
+		return name;
+	}
 	
 	public boolean isPrivate() {
 		if(password.equals("")) return false;
 		return true;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 }

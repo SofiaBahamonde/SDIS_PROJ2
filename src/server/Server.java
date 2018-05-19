@@ -48,6 +48,15 @@ public class Server{
 		return rooms;
 	}
 
+	public static Room getRoom(String room_name) {
+		for(Room r: rooms) {
+			if(r.getName().equals(room_name));
+			return r;
+		}
+		
+		return null;
+	}
+
 	
 
 

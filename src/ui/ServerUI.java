@@ -8,8 +8,8 @@ public class ServerUI {
     	System.out.print("\n");
     	System.out.print("\n");
         System.out.print("--------- CARDS AGAINST SDIS ---------\n");
-        System.out.print("\n");
         System.out.print("Welcome, please choose your username\n");
+        System.out.print("\n");
         System.out.print("Username: ");
 
         String username = System.console().readLine();
@@ -34,13 +34,22 @@ public class ServerUI {
 		System.out.print("\n");
 		System.out.print("\n");
 		System.out.print("------------ CREATE ROOM -------------\n");
-		System.out.print("\n");
 		System.out.print("Rooms must have a name, the passoword field is optional\n");
+		System.out.print("\n");
         System.out.print("Room name: ");
         
         String name = System.console().readLine();
         return name;
 		
+	}
+	
+	public static String enterRoom() {
+		System.out.print("\n");
+		System.out.print("Room Name: ");
+		
+		 String name = System.console().readLine();
+         return name;
+			
 	}
 
 	public static String password() {
