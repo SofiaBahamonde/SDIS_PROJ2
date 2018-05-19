@@ -15,6 +15,7 @@ public class RoomHandler implements Runnable {
 
 	PlayerID player;
     SSLSocket socket;
+    Room room;
     
     static PrintStream out;
     BufferedReader in;
@@ -42,7 +43,19 @@ public class RoomHandler implements Runnable {
     }
     
     private void room() {
-    	
+		sendRequest("ROOM");
+		sendRequest(room.toString());
+		sendRequest("STOP");
+		
+		try {
+			
+			String option = in.readLine();
+					
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 
     }
     
   
@@ -50,7 +63,6 @@ public class RoomHandler implements Runnable {
     	try {
     		
     		while(true) {
-				out = new PrintStream(socket.getOutputStream());
 		        sendRequest("MENU");
 		        
 		        String option = in.readLine();
@@ -59,7 +71,7 @@ public class RoomHandler implements Runnable {
 		        case "1":
 		        	sendRequest("SHOW_ROOMS");
 		        	sendRequest(Utils.toStringArray(Server.getRooms()));
-		        	sendRequest("STOP_SHOW");
+		        	sendRequest("STOP");
 
 		        	break;
 		        
@@ -70,7 +82,7 @@ public class RoomHandler implements Runnable {
 		        	Room room = Server.getRoom(room_name2);
 		        	
 		        	if(room !=null) {
-		        		if(room.isPrivate())
+		        		if(room.isPrivate()) {
 		        			sendRequest("PW");
 		        			String password2 = in.readLine();
 		        			
@@ -78,6 +90,8 @@ public class RoomHandler implements Runnable {
 		        				sendRequest("EEROR: INVALID_PW");
 		        				break;
 		        			}
+		        		}else
+		        			sendRequest("");
 		        	}else {
 		        		sendRequest("ERROR: INVALID_ROOM");
 		        		break;
@@ -87,6 +101,8 @@ public class RoomHandler implements Runnable {
 		        	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
 		        	
 		        	sendRequest("SUCCESS");
+		        	
+		        	this.room = room;
 		        	room();
 		        	
 		        	break;
@@ -98,6 +114,7 @@ public class RoomHandler implements Runnable {
 		        	String password1 = in.readLine();
 		        	
 		        	Server.addRoom(room_name1, password1,player);
+		        	this.room = new Room(room_name1,password1,player);
 		        	
 		        	room();
 		        	

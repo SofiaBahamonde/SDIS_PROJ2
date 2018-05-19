@@ -23,7 +23,7 @@ public class Room {
 		
 		str += "--------------------------------------\n"; 
 		
-		str += "ROOM - " + name + "\n";
+		str += name + "\n";
 		str += "type: " + (isPrivate() ? "private" : "public") + "\n";
 		str += "owner: " + owner.toString() + "\n";
 		

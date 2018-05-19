@@ -62,6 +62,20 @@ public class ServerUI {
 	public static void showRooms() {
 		System.out.print("\n---------------- ROOMS ---------------\n");
 	}
+
+	public static void showRoom() {
+		System.out.print("\n---------------- ROOM ----------------\n");
+		
+	}
+
+	public static String roomMenu() {
+		System.out.print("1 - Start Game\n");
+        System.out.print("2 - Leave Room\n");
+        System.out.print("Option: ");
+        
+        String option = System.console().readLine();
+        return option;
+	}
 	
 
 }

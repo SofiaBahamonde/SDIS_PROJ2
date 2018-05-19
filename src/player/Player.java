@@ -43,43 +43,64 @@ public class Player {
   }
 
     private static void paseRequest(String request) throws IOException {
+    	String data;
+    	
         switch (request){
             case "WELCOME":
-                String username = ServerUI.welcome();
-                sendResponse(username);
+                data = ServerUI.welcome();
+                sendResponse(data);
                 break;
                 
             case "MENU":
-            	String option = ServerUI.menu();
-            	sendResponse(option);
+            	data = ServerUI.menu();
+            	sendResponse(data);
             	break;
             	
             case "NEW_ROOM":
-            	String room_name1 = ServerUI.newRoom();
-            	sendResponse(room_name1);
-            	String room_pw = ServerUI.password();
-            	sendResponse(room_pw);
+            	data = ServerUI.newRoom();
+            	sendResponse(data);
+            	
+            	data = ServerUI.password();
+            	sendResponse(data);
             	break;
             	
             case "SHOW_ROOMS":
             	ServerUI.showRooms();
-            	String data = in.readLine();
-                while (!data.equals("STOP_SHOW")){
+            	
+            	data = in.readLine();
+                while (!data.equals("STOP")){
                 	System.out.println(data);
                 	data = in.readLine();
                 }
             	break;
+            	
             case "ENTER_ROOM":
-            	String room_name2 = ServerUI.enterRoom();
-            	sendResponse(room_name2);
-            
-            	if(in.readLine().equals("PW")) {
-            		String password2 = ServerUI.password();
-            		sendResponse(password2);
+            	data = ServerUI.enterRoom();
+            	sendResponse(data);
+            	
+            	data = in.readLine();
+
+            	if(data.equals("PW")) {
+            		data = ServerUI.password();
+            		sendResponse(data);
+            		data = in.readLine();
             	}
             	
-            	String result = in.readLine();
-            	System.out.println(result);
+            	System.out.println(data);
+            	break;
+            case "ROOM":
+            	ServerUI.showRoom();
+            	
+            	data = in.readLine();
+                while (!data.equals("STOP")){
+                	System.out.println(data);
+                	data = in.readLine();
+                }
+                
+                data = ServerUI.roomMenu();
+                sendResponse(data);
+                
+            	break;
             	
             default:
                 break;
