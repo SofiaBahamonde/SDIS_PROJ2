@@ -79,11 +79,9 @@ public class RoomHandler implements Runnable {
 		        		break;
 		        	}
 		        	
+		        	room.addPlayer(player);
+		        	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
 		        	sendRequest("SUCCESS");
-		        	
-		        	// put user into room
-		        	// send confirmation message
-		        
 		        	
 		        	break;
 		        

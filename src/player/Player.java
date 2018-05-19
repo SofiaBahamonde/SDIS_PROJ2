@@ -60,6 +60,7 @@ public class Player {
             	break;
             	
             case "SHOW_ROOMS":
+            	ServerUI.showRooms();
             	String data = in.readLine();
                 while (!data.equals("STOP_SHOW")){
                 	System.out.println(data);

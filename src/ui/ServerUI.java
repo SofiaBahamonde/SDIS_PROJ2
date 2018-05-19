@@ -58,6 +58,10 @@ public class ServerUI {
 		String password = System.console().readLine();
 		return password;
 	}
+
+	public static void showRooms() {
+		System.out.print("\n---------------- ROOMS ---------------\n");
+	}
 	
 
 }
