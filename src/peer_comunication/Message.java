@@ -75,5 +75,29 @@ public class Message {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void NEWPLAYER(String content,int senderID,SecretKey secretKey) {
+		String header="NEWPLAYER"+" "+senderID+ " "+CRLF;
+		String message=header + content;
+		System.out.println("MESSAGE: "+message);
+		try {
+			DesEncrypter des= new DesEncrypter(secretKey);
+			message=des.encrypt(message);
+			System.out.println("ENCRYPTED MESSAGE: "+message);
+			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
+			
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 }

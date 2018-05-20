@@ -4,14 +4,41 @@ import java.net.DatagramPacket;
 
 public class PacketHandler  implements Runnable{
 
-	public PacketHandler(DatagramPacket mc_packet) {
-		// TODO Auto-generated constructor stub
+
+	private DatagramPacket packet;
+	private String[] headerToken;
+	private String header;
+	private byte[] body;
+
+	public PacketHandler(DatagramPacket packet) {
+		this.packet = packet;
 	}
 
-	@Override
 	public void run() {
+		this.headerToken = HeaderExtractor();
+		switch (headerToken[0]) {
+
+		case "NEWPLAYER":
+			this.body = BodyExtractor();
+			NEWPLAYER_handler();
+			break;
+		}
+
+}
+
+	private void NEWPLAYER_handler() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	private byte[] BodyExtractor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String[] HeaderExtractor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
