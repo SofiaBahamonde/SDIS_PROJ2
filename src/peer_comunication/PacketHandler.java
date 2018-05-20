@@ -47,7 +47,6 @@ public class PacketHandler  implements Runnable{
 		switch(header_split[0]) {
 		case "NEWPLAYER":
 			NEWPLAYER_handler();
-			System.out.println("pintou");
 			break;
 		}
 
