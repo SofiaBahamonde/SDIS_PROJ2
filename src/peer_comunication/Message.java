@@ -14,7 +14,7 @@ public class Message {
 	public static final String CRLF = "\r"+"\n";
 	
 	public static void BLACKCARD(String content,int senderID,SecretKey secretKey) {
-		String header="BLACKCARD"+" "+senderID+ " "+CRLF;
+		String header="BLACKCARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
 		try {
@@ -38,7 +38,7 @@ public class Message {
 	}
 	
 	public static void WHITECARD(String content,int senderID,SecretKey secretKey) {
-		String header="WHITECARD"+" "+senderID+ " "+CRLF;
+		String header="WHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
 		try {
@@ -58,7 +58,7 @@ public class Message {
 	
 	}
 	public static void PICKWHITECARD(String content,int senderID,SecretKey secretKey) {
-		String header="PICKWHITECARD"+" "+senderID+ " "+CRLF;
+		String header="PICKWHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
 		try {
@@ -78,7 +78,7 @@ public class Message {
 	}
 	
 	public static void NEWPLAYER(String content,int senderID,SecretKey secretKey) {
-		String header="NEWPLAYER"+" "+senderID+ " "+CRLF;
+		String header="NEWPLAYER"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
 		try {
