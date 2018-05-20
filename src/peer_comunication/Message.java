@@ -7,6 +7,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import player.Player;
+import utils.DesEncrypter;
 
 public class Message {
 	

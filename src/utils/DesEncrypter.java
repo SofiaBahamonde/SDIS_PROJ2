@@ -1,4 +1,4 @@
-package peer_comunication;
+package utils;
 
 
 import java.io.UnsupportedEncodingException;
@@ -9,8 +9,10 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import java.util.Base64;
-  
+import javax.xml.bind.DatatypeConverter;
+
+
+
 public class DesEncrypter {
   
     Cipher ecipher;
@@ -33,21 +35,23 @@ public class DesEncrypter {
   
             // Encrypt
             byte[] enc = ecipher.doFinal(utf8);
+            
   
-            // Encode bytes to base64 to get a string
-            return new sun.misc.BASE64Encoder().encode(enc);
+            // Encode bytes to base64 to get a string           
+            return  DatatypeConverter.printBase64Binary(enc);
+       
+            
         } catch (javax.crypto.BadPaddingException e) {
         } catch (IllegalBlockSizeException e) {
         } catch (UnsupportedEncodingException e) {
-        } catch (java.io.IOException e) {
-        }
+        } 
         return null;
     }
   
     public String decrypt(String str) {
         try {
             // Decode base64 to get bytes
-            byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+            byte[] dec = DatatypeConverter.parseBase64Binary(str);
             // Decrypt
             byte[] utf8 = dcipher.doFinal(dec);
             // Decode using utf-8
@@ -55,7 +59,6 @@ public class DesEncrypter {
         } catch (javax.crypto.BadPaddingException e) {
         } catch (IllegalBlockSizeException e) {
         } catch (UnsupportedEncodingException e) {
-        } catch (java.io.IOException e) {
         }
         return null;
     }
