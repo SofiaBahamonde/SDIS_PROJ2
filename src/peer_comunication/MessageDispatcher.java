@@ -44,7 +44,7 @@ public class MessageDispatcher implements Runnable{
 				e.printStackTrace();
 			}
 			System.out.println("received packet");
-			new Thread(new PacketHandler(mc_packet)).start();
+			//new Thread(new PacketHandler(mc_packet)).start();
 } 
 		
 	}
