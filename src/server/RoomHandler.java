@@ -47,14 +47,8 @@ public class RoomHandler implements Runnable {
 		sendRequest(room.toString());
 		sendRequest("STOP");
 		
-		try {
-			
-			String option = in.readLine();
-					
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		sendRequest(Server.getPort());
+		sendRequest(Server.getAddress());
  
     }
     
