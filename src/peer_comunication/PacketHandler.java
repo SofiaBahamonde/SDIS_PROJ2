@@ -24,6 +24,7 @@ public class PacketHandler  implements Runnable{
 	public PacketHandler(DatagramPacket packet,SecretKey secretKey) {
 		this.packet = packet;
 		this.secretKey= secretKey;
+		System.out.println(packet);
 		try {
 			this.encrypter= new DesEncrypter(secretKey);
 		} catch (InvalidKeyException e) {
@@ -54,6 +55,7 @@ public class PacketHandler  implements Runnable{
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		try {
 			String message = bufferedReader.readLine();
+			System.out.println(message);
 			message= this.encrypter.decrypt(message);
 			return message;
 		} catch (IOException e) {
