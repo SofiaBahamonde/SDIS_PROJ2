@@ -51,12 +51,16 @@ public class PacketHandler  implements Runnable{
 	}
 
 	private String MessageExtractor() {
+		System.out.println("EXTRACTING MESSAGE");
 		ByteArrayInputStream stream = new ByteArrayInputStream(packet.getData());
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		try {
 			String message = bufferedReader.readLine();
-			System.out.println(message);
+			String ola =SecretKeyGenerator.keyToString(secretKey);
+			System.out.println("KEY "+ola);
+			System.out.println("ENCRYPTED"+message);
 			message= this.encrypter.decrypt(message);
+			System.out.println("DESENCRYPTED"+message);
 			return message;
 		} catch (IOException e) {
 		e.printStackTrace();
