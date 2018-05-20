@@ -23,6 +23,9 @@ public class Player {
     private int score;
     private SecretKey secretKey;
     private static MessageDispatcher dispatcher;
+    
+    private static String mcast_addr;
+    private static String port;
 
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
@@ -35,8 +38,8 @@ public class Player {
 
     Player c = new Player();
 
-    c.out = new PrintStream(socket.getOutputStream());
-    c.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    out = new PrintStream(socket.getOutputStream());
+    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
     String request = null;
     while (((request = in.readLine()) != null)) {
@@ -102,8 +105,14 @@ public class Player {
                 	System.out.println(data);
                 	data = in.readLine();
                 }
+                                
+                port = in.readLine();
+                mcast_addr = in.readLine();
                 
-                data = ServerUI.roomMenu();
+                System.out.println(port);
+                System.out.println(mcast_addr);
+                
+                data = ServerUI.startGame();
                 sendResponse(data);
                 
             	break;

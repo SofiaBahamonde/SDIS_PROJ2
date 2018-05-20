@@ -13,6 +13,10 @@ public class Server{
 	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
 	static ArrayList<Room> rooms = new ArrayList<Room>();
 	
+	static int port = 4445;
+	static String address = "224.0.0.0";
+	
+	
     public static void main(String[] args) throws Exception {
 
     SSLServerSocketFactory ssf = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
@@ -57,7 +61,14 @@ public class Server{
 		return null;
 	}
 
+	public static String getPort() {
+		return Integer.toString(port);
+	}
 
+	public static String getAddress() {
+		return address;
+	}
+	
 
 	
 
