@@ -112,16 +112,10 @@ public class Player {
                 secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
                 
                 dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
-                
-                System.out.println("antes");
                 new Thread(dispatcher).start();
-                
-                System.out.println("depois");
                 
                 Message.NEWPLAYER("yo", 13, secret_key);
                 
-                
-                               
                 data = ServerUI.startGame();
                 sendResponse(data);
                 
