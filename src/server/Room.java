@@ -1,13 +1,12 @@
 package server;
 
 import player.PlayerID;
+import utils.SecretKeyGenerator;
 import utils.Utils;
 
 import java.util.ArrayList;
 
 import javax.crypto.SecretKey;
-
-import peer_comunication.SecretKeyGenerator;
 
 public class Room {
 	private static int room_counter=0;

@@ -6,8 +6,8 @@ import javax.net.ssl.*;
 import game.White_Card;
 import peer_comunication.Message;
 import peer_comunication.MessageDispatcher;
-import peer_comunication.SecretKeyGenerator;
 import ui.ServerUI;
+import utils.SecretKeyGenerator;
 import utils.Utils;
 
 import java.io.BufferedReader;

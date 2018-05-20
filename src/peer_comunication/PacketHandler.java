@@ -12,6 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import utils.DesEncrypter;
+import utils.SecretKeyGenerator;
 
 public class PacketHandler  implements Runnable{
 
@@ -30,13 +31,10 @@ public class PacketHandler  implements Runnable{
 		try {
 			this.encrypter= new DesEncrypter(secretKey);
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -45,6 +43,13 @@ public class PacketHandler  implements Runnable{
 		MessageExtractor();
 		System.out.println(message);
 		System.out.println("STRING DIVIDED "+header_split[0]+ " "+header_split[1]+" MESSAGE:"+this.content);
+		
+		switch(header_split[0]) {
+		case "NEWPLAYER":
+			NEWPLAYER_handler();
+			System.out.println("pintou");
+			break;
+		}
 
 }
 

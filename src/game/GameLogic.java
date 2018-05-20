@@ -12,8 +12,8 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import peer_comunication.Message;
-import peer_comunication.SecretKeyGenerator;
 import utils.DesEncrypter;
+import utils.SecretKeyGenerator;
 
 
 public class GameLogic {
