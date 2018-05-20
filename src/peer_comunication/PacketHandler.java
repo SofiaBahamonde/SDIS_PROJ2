@@ -48,6 +48,8 @@ public class PacketHandler  implements Runnable{
 		case "NEWPLAYER":
 			NEWPLAYER_handler();
 			break;
+			
+		
 		}
 
 }
