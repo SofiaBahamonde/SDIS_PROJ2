@@ -1,20 +1,42 @@
 package server;
 
 import player.PlayerID;
+import utils.Utils;
 
 import java.util.ArrayList;
 
+import javax.crypto.SecretKey;
+
+import peer_comunication.SecretKeyGenerator;
+
 public class Room {
-	String name;
-	String password;
-	PlayerID owner;
+	private static int room_counter=0;
 	
-	ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	// base fields
+	private String name;
+	private String password;
+	private PlayerID owner;
+	private ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	
+	// communication fields
+	private String address;
+	private String secret_key;
+	private int port;
+	
+	
 	
 	public Room(String name, String password,PlayerID owner) {
 		this.name = name;
 		this.password = password;
 		this.owner = owner;
+		
+		this.address = Utils.addresses.get(room_counter);
+		this.port = Utils.ports.get(room_counter);
+		
+		SecretKey secretKey=SecretKeyGenerator.generateSecretKey();
+		this.secret_key =SecretKeyGenerator.keyToString(secretKey);
+
+		
 	}
 	
 	@Override
@@ -40,14 +62,29 @@ public class Room {
 		return name;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+	
+	
+	public String getAddress() {
+		return address;
+	}
+	
+	public String getKey() {
+		return secret_key;
+	}
+	
+	public String getPort() {
+		return Integer.toString(port);
+	}
+
+	
 	public boolean isPrivate() {
 		if(password.equals("")) return false;
 		return true;
 	}
 
-	public String getPassword() {
-		return password;
-	}
 
 	public void addPlayer(PlayerID player) {
 		players.add(player);

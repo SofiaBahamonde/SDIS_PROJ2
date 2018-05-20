@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 
 public class MessageDispatcher implements Runnable{
 
@@ -14,9 +15,15 @@ public class MessageDispatcher implements Runnable{
 	public int mc_port;
 	public static final int PACKET_SIZE=2048;
 	
-	public MessageDispatcher(int mc_port,InetAddress mc_address) {
-		this.mc_port=mc_port;
-		this.mc_address=mc_address;
+	public MessageDispatcher(String mc_port,String mc_address) {
+		
+		this.mc_port=Integer.parseInt(mc_port);
+		
+		try {
+			this.mc_address=InetAddress.getByName(mc_address);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 }
 	
 	
@@ -27,7 +34,6 @@ public class MessageDispatcher implements Runnable{
 			mc_socket.setTimeToLive(1);
 			mc_socket.joinGroup(mc_address);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -47,9 +47,10 @@ public class RoomHandler implements Runnable {
 		sendRequest(room.toString());
 		sendRequest("STOP");
 		
-		sendRequest(Server.getPort());
-		sendRequest(Server.getAddress());
- 
+		sendRequest(room.getPort());
+		sendRequest(room.getAddress());
+		sendRequest(room.getKey());
+	 
     }
     
   
@@ -63,55 +64,15 @@ public class RoomHandler implements Runnable {
 		        
 		        switch(option) {
 		        case "1":
-		        	sendRequest("SHOW_ROOMS");
-		        	sendRequest(Utils.toStringArray(Server.getRooms()));
-		        	sendRequest("STOP");
-
+		        	showRooms();
 		        	break;
 		        
 		        case "2":
-		        	sendRequest("ENTER_ROOM");
-		        	String room_name2 = in.readLine();
-		        	
-		        	Room room = Server.getRoom(room_name2);
-		        	
-		        	if(room !=null) {
-		        		if(room.isPrivate()) {
-		        			sendRequest("PW");
-		        			String password2 = in.readLine();
-		        			
-		        			if(!room.getPassword().equals(password2)) {
-		        				sendRequest("EEROR: INVALID_PW");
-		        				break;
-		        			}
-		        		}else
-		        			sendRequest("");
-		        	}else {
-		        		sendRequest("ERROR: INVALID_ROOM");
-		        		break;
-		        	}
-		        	
-		        	room.addPlayer(player);
-		        	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
-		        	
-		        	sendRequest("SUCCESS");
-		        	
-		        	this.room = room;
-		        	room();
-		        	
+		        	enterRoom();
 		        	break;
 		        
 		        case "3":
-		        	sendRequest("NEW_ROOM");
-		        	
-		        	String room_name1 = in.readLine();
-		        	String password1 = in.readLine();
-		        	
-		        	Server.addRoom(room_name1, password1,player);
-		        	this.room = new Room(room_name1,password1,player);
-		        	
-		        	room();
-		        	
+		        	createRoom();
 		        	break;
 
 		        default:
@@ -121,10 +82,62 @@ public class RoomHandler implements Runnable {
     		}
     		   		        
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		
+	}
+
+	private void createRoom() throws IOException {
+    	sendRequest("NEW_ROOM");
+    	
+    	String room_name1 = in.readLine();
+    	String password1 = in.readLine();
+    	
+    	Server.addRoom(room_name1, password1,player);
+    	this.room = Server.getRoom(room_name1);
+    	
+    	room();
+		
+	}
+
+	private void enterRoom() throws IOException {
+		sendRequest("ENTER_ROOM");
+    	String room_name2 = in.readLine();
+    	
+    	Room room = Server.getRoom(room_name2);
+    	
+    	if(room !=null) {
+    		if(room.isPrivate()) {
+    			sendRequest("PW");
+    			String password2 = in.readLine();
+    			
+    			if(!room.getPassword().equals(password2)) {
+    				sendRequest("EEROR: INVALID_PW");
+    				return;
+    			}
+    		}else
+    			sendRequest("");
+    	}else {
+    		sendRequest("ERROR: INVALID_ROOM");
+    		return;
+    	}
+    	
+    	room.addPlayer(player);
+    	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
+    	
+    	sendRequest("SUCCESS");
+    	
+    	this.room = room;
+    	room();
+    	
+		
+	}
+
+	private void showRooms() {
+    	sendRequest("SHOW_ROOMS");
+    	sendRequest(Utils.toStringArray(Server.getRooms()));
+    	sendRequest("STOP");
 		
 	}
 

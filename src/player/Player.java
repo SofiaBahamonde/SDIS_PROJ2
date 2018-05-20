@@ -5,6 +5,7 @@ import javax.net.ssl.*;
 
 import game.White_Card;
 import peer_comunication.MessageDispatcher;
+import peer_comunication.SecretKeyGenerator;
 import ui.ServerUI;
 import utils.Utils;
 
@@ -21,9 +22,10 @@ public class Player {
     static BufferedReader in;
     private ArrayList<White_Card> current_cards;
     private int score;
-    private SecretKey secretKey;
+    
     private static MessageDispatcher dispatcher;
     
+    private static SecretKey secret_key;
     private static String mcast_addr;
     private static String port;
 
@@ -108,6 +110,10 @@ public class Player {
                                 
                 port = in.readLine();
                 mcast_addr = in.readLine();
+                secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
+                
+                dispatcher = new MessageDispatcher(port,mcast_addr);
+                
                 
                 System.out.println(port);
                 System.out.println(mcast_addr);

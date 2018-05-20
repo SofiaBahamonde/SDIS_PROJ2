@@ -1,7 +1,6 @@
 package server;
 
 import java.util.ArrayList;
-
 import javax.net.ssl.*;
 
 import utils.Utils;
@@ -13,22 +12,19 @@ public class Server{
 	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
 	static ArrayList<Room> rooms = new ArrayList<Room>();
 	
-	static int port = 4445;
-	static String address = "224.0.0.0";
-	
 	
     public static void main(String[] args) throws Exception {
 
-    SSLServerSocketFactory ssf = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-    SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(Utils.PORT);
-    
-    ss.setNeedClientAuth(true);
-    ss.setEnabledCipherSuites(ssf.getSupportedCipherSuites());
-
-    while(true) {
-      SSLSocket socket = (SSLSocket) ss.accept();
-      new Thread( new RoomHandler(socket)).start();
-    }
+	    SSLServerSocketFactory ssf = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+	    SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(Utils.PORT);
+	    
+	    ss.setNeedClientAuth(true);
+	    ss.setEnabledCipherSuites(ssf.getSupportedCipherSuites());
+	
+	    while(true) {
+	      SSLSocket socket = (SSLSocket) ss.accept();
+	      new Thread( new RoomHandler(socket)).start();
+	    }
 
 
     }
@@ -60,17 +56,6 @@ public class Server{
 		
 		return null;
 	}
-
-	public static String getPort() {
-		return Integer.toString(port);
-	}
-
-	public static String getAddress() {
-		return address;
-	}
-	
-
-	
 
 
 }
