@@ -45,6 +45,7 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
 			
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
@@ -64,6 +65,7 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
 			
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();

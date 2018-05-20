@@ -36,7 +36,16 @@ public class MessageDispatcher implements Runnable{
 	public void run() {
 		byte[] buffer= new byte[PACKET_SIZE];
 		connect_to_multicast_socket();
-		// TODO Auto-generated method stub
+		while(true) {
+			DatagramPacket mc_packet = new DatagramPacket(buffer, buffer.length);
+			try {
+				mc_socket.receive(mc_packet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("received packet");
+			new Thread(new PacketHandler(mc_packet)).start();
+} 
 		
 	}
 
