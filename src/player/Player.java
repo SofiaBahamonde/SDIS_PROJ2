@@ -4,6 +4,7 @@ import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
 import game.White_Card;
+import peer_comunication.Message;
 import peer_comunication.MessageDispatcher;
 import peer_comunication.SecretKeyGenerator;
 import ui.ServerUI;
@@ -26,9 +27,7 @@ public class Player {
     private static MessageDispatcher dispatcher;
     
     private static SecretKey secret_key;
-    private static String mcast_addr;
-    private static String port;
-
+    
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
 	}
@@ -108,16 +107,21 @@ public class Player {
                 	data = in.readLine();
                 }
                                 
-                port = in.readLine();
-                mcast_addr = in.readLine();
+                String port = in.readLine();
+                String mcast_addr = in.readLine();
                 secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
                 
-                dispatcher = new MessageDispatcher(port,mcast_addr);
+                dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
+                
+                System.out.println("antes");
+                new Thread(dispatcher).start();
+                
+                System.out.println("depois");
+                
+                Message.NEWPLAYER("yo", 13, secret_key);
                 
                 
-                System.out.println(port);
-                System.out.println(mcast_addr);
-                
+                               
                 data = ServerUI.startGame();
                 sendResponse(data);
                 

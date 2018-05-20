@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 
+import javax.crypto.SecretKey;
+
 public class MessageDispatcher implements Runnable{
 
 	
@@ -13,11 +15,13 @@ public class MessageDispatcher implements Runnable{
 
 	public InetAddress mc_address;
 	public int mc_port;
+	public SecretKey secret_key;
 	public static final int PACKET_SIZE=2048;
 	
-	public MessageDispatcher(String mc_port,String mc_address) {
+	public MessageDispatcher(String mc_port,String mc_address, SecretKey secret_key) {
 		
 		this.mc_port=Integer.parseInt(mc_port);
+		this.secret_key = secret_key;
 		
 		try {
 			this.mc_address=InetAddress.getByName(mc_address);
@@ -50,7 +54,7 @@ public class MessageDispatcher implements Runnable{
 				e.printStackTrace();
 			}
 			System.out.println("received packet");
-			//new Thread(new PacketHandler(mc_packet)).start();
+			new Thread(new PacketHandler(mc_packet,secret_key)).start();
 } 
 		
 	}
