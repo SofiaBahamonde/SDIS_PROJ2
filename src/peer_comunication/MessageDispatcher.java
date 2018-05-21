@@ -58,7 +58,7 @@ public class MessageDispatcher implements Runnable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("received packet");
+
 			new Thread(new PacketHandler(mc_packet,secret_key)).start();
 } 
 		
@@ -76,8 +76,8 @@ public class MessageDispatcher implements Runnable{
 			packet = Message.NEWPLAYER(content,senderID,secret_key);
 			break;
 			
-		case "PICKWHITECARD":
-			packet = Message.PICKWHITECARD(content, senderID, secret_key);
+		case "INITIALCARDS":
+			packet = Message.INITIALCARDS(content, senderID, secret_key);
 			break;
 		default:
 			break;

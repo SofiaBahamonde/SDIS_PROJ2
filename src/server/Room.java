@@ -122,7 +122,7 @@ public class Room implements Runnable{
 		for (int i = 0; i < players.size(); i++) {
 			String initial_cards = game.getWhiteCards(5);
 			
-			dispatcher.sendMessage("PICKWHITECARD",initial_cards, players.get(i).getPlayerID());
+			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
 			
 		}
 		

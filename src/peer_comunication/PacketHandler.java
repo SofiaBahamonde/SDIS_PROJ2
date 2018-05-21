@@ -61,8 +61,8 @@ public class PacketHandler  implements Runnable{
 		case "NEWJUDGE":
 			break;
 		
-		case "FIVEWHITECARDS":
-			FIVEWHITECARDS_handler();
+		case "INITIALCARDS":
+			INITIALCARDS_handler();
 			break;
 			
 		
@@ -72,13 +72,7 @@ public class PacketHandler  implements Runnable{
 }
 
 	private void PICKWHITECARD_handler() {
-//		
-//		System.out.println(senderID);
-//
-//		System.out.println(Player.getPlayer_id());
-//		if(senderID ==Player.getPlayer_id()) {
-			System.out.println("White Card: " + content);
-//		}
+
 		
 	}
 
@@ -87,9 +81,9 @@ public class PacketHandler  implements Runnable{
 
 	}
 	
-	private void FIVEWHITECARDS_handler() {
+	private void INITIALCARDS_handler() {
 		String[] cards;
-		cards= content.split("|");
+		cards= content.split("&");
 		for(int i=0; i<cards.length;i++) {
 			System.out.println(cards[i]);
 		}
