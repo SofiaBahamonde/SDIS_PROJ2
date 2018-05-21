@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.crypto.SecretKey;
 
 import game.GameLogic;
+import peer_comunication.MessageDispatcher;
 
 public class Room implements Runnable{
 	private static int room_counter=0;
@@ -18,13 +19,15 @@ public class Room implements Runnable{
 	private String password;
 	private PlayerInfo owner;
 	private ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
-	private GameLogic game;
 	
 	// communication fields
-	private String address;
-	private String secret_key;
+	private String mcast_addr;
+	private SecretKey secret_key;
 	private int port;
 	
+	// game fields
+	private GameLogic game;
+	private MessageDispatcher dispatcher;
 	
 	
 	public Room(String name, String password,PlayerInfo owner) {
@@ -32,12 +35,14 @@ public class Room implements Runnable{
 		this.password = password;
 		this.owner = owner;
 		
-		this.address = Utils.addresses.get(room_counter);
+		players.add(owner);
+		
+		this.mcast_addr = Utils.addresses.get(room_counter);
 		this.port = Utils.ports.get(room_counter);
 		
-		SecretKey secretKey=SecretKeyGenerator.generateSecretKey();
-		this.secret_key =SecretKeyGenerator.keyToString(secretKey);
-		
+		this.secret_key =SecretKeyGenerator.generateSecretKey();
+		 
+
 		room_counter++;
 
 		
@@ -72,11 +77,11 @@ public class Room implements Runnable{
 	
 	
 	public String getAddress() {
-		return address;
+		return mcast_addr;
 	}
 	
 	public String getKey() {
-		return secret_key;
+		return SecretKeyGenerator.keyToString(secret_key);
 	}
 	
 	public String getPort() {
@@ -97,10 +102,23 @@ public class Room implements Runnable{
 	@Override
 	public void run() {
 		System.out.println("Game has started - room " + name);
-		game=new GameLogic("black_cards.txt","white_cards.txt");
-		
-		while(true) {
-			
+
+		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key);
+		new Thread(dispatcher).start();
+
+		game = new GameLogic("black_cards.txt", "white_cards.txt");
+
+		for (int i = 0; i < players.size(); i++) {
+			ArrayList<String> initial_cards = game.getWhiteCards(5);
+
+			for (int j = 0; j < 5; j++) {
+
+			}
+
+		}
+
+		while (true) {
+
 		}
 		
 	}
