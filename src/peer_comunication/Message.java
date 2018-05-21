@@ -80,11 +80,11 @@ public class Message {
 	public static void NEWPLAYER(String content,int senderID,SecretKey secretKey) {
 		String header="NEWPLAYER"+" "+senderID+CRLF;
 		String message=header + content;
-		System.out.println("MESSAGE: "+message);
+		//System.out.println("MESSAGE: "+message);
 		try {
 			DesEncrypter des= new DesEncrypter(secretKey);
 			message=des.encrypt(message);
-			System.out.println("ENCRYPTED MESSAGE: "+message);
+			//System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
 			Player.getDispatcher().sendMessage(packet);
 			

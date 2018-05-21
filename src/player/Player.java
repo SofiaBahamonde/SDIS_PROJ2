@@ -3,7 +3,7 @@ package player;
 import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
-import game.White_Card;
+
 import peer_comunication.Message;
 import peer_comunication.MessageDispatcher;
 import ui.ServerUI;
@@ -14,19 +14,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.ArrayList;
+
 
 
 public class Player {
 
     static PrintStream out;
     static BufferedReader in;
-    private ArrayList<White_Card> current_cards;
-    private int score;
+    //private ArrayList<White_Card> current_cards;
+    //private int score;
     
     private static MessageDispatcher dispatcher;
-    
     private static SecretKey secret_key;
+    
+    private static String username;
+    private static boolean owner = false;
     
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
@@ -36,8 +38,6 @@ public class Player {
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
     SSLSocket socket = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
     socket.setEnabledCipherSuites(sf.getSupportedCipherSuites());
-
-    Player c = new Player();
 
     out = new PrintStream(socket.getOutputStream());
     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -57,8 +57,8 @@ public class Player {
     	
         switch (request){
             case "WELCOME":
-                data = ServerUI.welcome();
-                sendResponse(data);
+                username = ServerUI.welcome();
+                sendResponse(username);
                 break;
                 
             case "MENU":
@@ -67,6 +67,7 @@ public class Player {
             	break;
             	
             case "NEW_ROOM":
+            	owner = true;
             	data = ServerUI.newRoom();
             	sendResponse(data);
             	
@@ -114,11 +115,12 @@ public class Player {
                 dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
                 new Thread(dispatcher).start();
                 
-                Message.NEWPLAYER("yo", 13, secret_key);
+                Message.NEWPLAYER(username, 13, secret_key);
                 
-                data = ServerUI.startGame();
-                sendResponse(data);
-                
+                if(owner) {
+	                data = ServerUI.startGame();
+	                sendResponse(data);
+                }
             	break;
             	
             default:

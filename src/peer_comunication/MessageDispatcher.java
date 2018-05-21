@@ -53,7 +53,7 @@ public class MessageDispatcher implements Runnable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("received packet");
+			//System.out.println("received packet");
 			new Thread(new PacketHandler(mc_packet,secret_key)).start();
 } 
 		
