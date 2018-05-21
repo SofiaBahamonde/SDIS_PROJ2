@@ -72,8 +72,6 @@ public class PacketHandler  implements Runnable{
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		try {
 			String message = bufferedReader.readLine();
-			String ola =SecretKeyGenerator.keyToString(secretKey);
-			
 			message= this.encrypter.decrypt(message);
 
 			String[] parts = message.split(Message.CRLF);
