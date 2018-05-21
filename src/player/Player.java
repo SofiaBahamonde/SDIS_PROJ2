@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.InetAddress;
 
 
 
@@ -36,15 +37,28 @@ public class Player {
 	}
 
 	public static void main(String[] args) throws Exception {
+		String host=Utils.HOST;
+		int port=Utils.PORT;
+		
+//	 if(args.length>2 ||args.length<2) {
+//			System.out.println("BAD USAGE- The arguments are: Server Ip and Server Port");
+//		}
+//		else {
+//			host=args[0];
+//			port=Integer.parseInt(args[1]);
+//		}
+			
     SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
-    SSLSocket socket = (SSLSocket) sf.createSocket(Utils.HOST, Utils.PORT);
+    SSLSocket socket = (SSLSocket) sf.createSocket(InetAddress.getByName(host), port);
     socket.setEnabledCipherSuites(sf.getSupportedCipherSuites());
+    
 
     out = new PrintStream(socket.getOutputStream());
     in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
     String request = null;
     while (((request = in.readLine()) != null)) {
+    	System.out.println("REQUEST: "+request);
         paseRequest(request);
     }
 
@@ -53,7 +67,11 @@ public class Player {
     socket.close();
   }
 
-    private static void paseRequest(String request) throws IOException {
+    public static int getPlayer_id() {
+		return player_id;
+	}
+
+	private static void paseRequest(String request) throws IOException {
     	String data;
     	
         switch (request){
@@ -61,8 +79,6 @@ public class Player {
                 username = ServerUI.welcome();
                 sendResponse(username);
                 player_id = Integer.parseInt(in.readLine());
-                System.out.println(player_id);
-                
                 break;
                 
             case "MENU":
@@ -116,15 +132,16 @@ public class Player {
                 String mcast_addr = in.readLine();
                 secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
                 
-                dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
+                dispatcher = new MessageDispatcher(Integer.parseInt(port),mcast_addr,secret_key);
                 new Thread(dispatcher).start();
                 
-                Message.NEWPLAYER(username, 13, secret_key);
+                dispatcher.sendMessage("NEWPLAYER",username, player_id, secret_key);
                 
                 if(owner) {
 	                data = ServerUI.startGame();
 	                sendResponse(data);
                 }
+                
             	break;
             	
             default:

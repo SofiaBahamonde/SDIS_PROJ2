@@ -57,6 +57,12 @@ public class Server{
 		return null;
 	}
 
+	public static void joinRoom(PlayerInfo player, Room room) {
+		room.addPlayer(player);
+		System.out.println("Player has joined room " + room.getName() + " - " + player.toString());
+		
+	}
+
 
 }
 

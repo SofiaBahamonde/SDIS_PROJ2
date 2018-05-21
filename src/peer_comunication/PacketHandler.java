@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import player.Player;
 import utils.DesEncrypter;
 import utils.SecretKeyGenerator;
 
@@ -21,6 +22,7 @@ public class PacketHandler  implements Runnable{
 	private String[] header_split;
 	private String content;
 	private SecretKey secretKey;
+	private int senderID;
 	DesEncrypter encrypter;
 
 	public PacketHandler(DatagramPacket packet,SecretKey secretKey) {
@@ -40,15 +42,26 @@ public class PacketHandler  implements Runnable{
 
 	public void run() {
 		MessageExtractor();
-		//System.out.println(message);
-		//System.out.println("STRING DIVIDED "+header_split[0]+ " "+header_split[1]+" MESSAGE:"+this.content);
-		
+		if(senderID!=Player.getPlayer_id()) {
 		switch(header_split[0]) {
 		case "NEWPLAYER":
 			NEWPLAYER_handler();
 			break;
+		
+		case "BLACKCARD":
+			break;
+			
+		case "WHITECARD":
+			break;
+			
+		case "PICKWHITECARD":
+			break;
+			
+		case "NEWJUDGE":
+			break;
 			
 		
+		}
 		}
 
 }
@@ -63,12 +76,11 @@ public class PacketHandler  implements Runnable{
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		try {
 			String message = bufferedReader.readLine();
-			String ola =SecretKeyGenerator.keyToString(secretKey);
-			
 			message= this.encrypter.decrypt(message);
 
 			String[] parts = message.split(Message.CRLF);
 			this.header_split=parts[0].split("\\s+");
+			this.senderID=Integer.parseInt(header_split[1]);
 			this.content=parts[1];
 		
 		} catch (IOException e) {
