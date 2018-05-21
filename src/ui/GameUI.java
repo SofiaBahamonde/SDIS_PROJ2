@@ -13,10 +13,7 @@ public class GameUI {
 		System.out.print("\n");
 		System.out.print("\n");
 		System.out.print("-------- Choose One to complete the sentence --------\n");
-		for(int i=0;i<cards.size();i++) {
-		 System.out.println(i+1 + " - " + cards.get(i));
-		}
-
+		showWhiteCards(cards);
         System.out.print("Option: ");
         
         String option = System.console().readLine();
@@ -24,6 +21,13 @@ public class GameUI {
         int o = Integer.parseInt(option);
         return cards.get(o);
         
+	}
+
+	public static void showWhiteCards(ArrayList<String> cards) {
+		for(int i=0;i<cards.size();i++) {
+			 System.out.println(i+1 + " - " + cards.get(i));
+			}
+
 	}
 	
 

@@ -5,6 +5,7 @@ import javax.net.ssl.*;
 
 
 import peer_comunication.MessageDispatcher;
+import ui.GameUI;
 import ui.ServerUI;
 import utils.SecretKeyGenerator;
 import utils.Utils;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 
 
@@ -21,8 +23,6 @@ public class Player {
 
     static PrintStream out;
     static BufferedReader in;
-    //private ArrayList<White_Card> current_cards;
-    //private int score;
     
     private static MessageDispatcher dispatcher;
     private static SecretKey secret_key;
@@ -30,6 +30,9 @@ public class Player {
     private static int player_id = -1;
     private static String username;
     private static boolean owner = false;
+    
+    private static ArrayList<String> white_cards = new ArrayList<String>();
+    //private int score;
     
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
@@ -149,4 +152,14 @@ public class Player {
         out.println(response);
         out.flush();
     }
+
+	public static void addWhiteCard(String card) {
+		white_cards.add(card);
+		
+	}
+
+	public static void showWhiteCards() {
+		GameUI.showWhiteCards(white_cards);
+		
+	}
 }

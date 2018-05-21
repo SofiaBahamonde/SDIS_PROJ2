@@ -43,9 +43,6 @@ public class PacketHandler  implements Runnable{
 	}
 
 
-
-
-
 	public void run() {
 		MessageExtractor();
 		
@@ -95,13 +92,15 @@ public class PacketHandler  implements Runnable{
 
 	
 	private void INITIALCARDS_handler() {
-		if(player_id == sender_id) {
-		
+		if(player_id == sender_id) {		
 			String[] cards;
 			cards= content.split("_");
+			
 			for(int i=0; i<cards.length;i++) {
-				System.out.println(cards[i]);
+				Player.addWhiteCard(cards[i]);
 			}
+			
+			Player.showWhiteCards();
 		
 		}
 		
@@ -109,8 +108,10 @@ public class PacketHandler  implements Runnable{
 	private void MessageExtractor() {
 		ByteArrayInputStream stream = new ByteArrayInputStream(packet.getData());
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+		
+		String message = "";
 		try {
-			String message = bufferedReader.readLine();
+			message = bufferedReader.readLine();
 			message= this.encrypter.decrypt(message);
 
 			String[] parts = message.split(Message.CRLF);
