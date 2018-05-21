@@ -32,6 +32,8 @@ public class Player {
     private static boolean owner = false;
     
     private static ArrayList<String> white_cards = new ArrayList<String>();
+    private static String black_card = "";
+    private static boolean jury = false;
     //private int score;
     
     public static MessageDispatcher getDispatcher() {
@@ -160,6 +162,21 @@ public class Player {
 
 	public static void showWhiteCards() {
 		GameUI.showWhiteCards(white_cards);
+	}
+
+	public static void setBlackCard(String card) {
+		black_card = card;
+	}
+
+	public static void isJury(boolean b) {
+		jury= b;
+	}
+
+	public static void startRound() {
+		if(jury) {
+			System.out.println("Waiting for Players answers");
+		}else
+			GameUI.makePlay(black_card, white_cards);
 		
 	}
 }

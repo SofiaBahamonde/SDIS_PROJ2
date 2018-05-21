@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class GameUI {
 	
-	public static String game(String card,ArrayList<String> cards) {
+	public static String makePlay(String card,ArrayList<String> cards) {
 		
 		System.out.print("\n");
 		System.out.print("\n");

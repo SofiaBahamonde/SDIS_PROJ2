@@ -9,7 +9,8 @@ public class Utils {
     public static final int PORT = 8080;
     
     public static final int PACKET_SIZE=2048;
-    
+	public static final String CRLF = "\r"+"\n";
+	
     public static ArrayList<Integer> ports = new ArrayList<Integer>(){ 
     private static final long serialVersionUID = 1L;
 	{

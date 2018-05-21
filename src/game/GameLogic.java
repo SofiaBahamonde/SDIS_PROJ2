@@ -50,7 +50,7 @@ public class GameLogic {
 		
 	}
 	
-	public String draw_blackCard() {
+	public String drawBlackCard() {
 		String bc;
 		do {
 			Random rand = new Random();
@@ -71,7 +71,7 @@ public class GameLogic {
 			do {
 				Random rand = new Random();
 
-				int  n = rand.nextInt(black_cards_database.size()) + 1;
+				int  n = rand.nextInt(black_cards_database.size());
 				 wc=white_cards_database.get(n);
 			}
 			while(used_white_cards.contains(wc));

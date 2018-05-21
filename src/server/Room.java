@@ -4,9 +4,7 @@ import player.PlayerInfo;
 import utils.SecretKeyGenerator;
 import utils.Utils;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
-
 
 import javax.crypto.SecretKey;
 
@@ -30,8 +28,6 @@ public class Room implements Runnable{
 	// game fields
 	private GameLogic game;
 	private MessageDispatcher dispatcher;
-	private static final int MAX_ROUNDS= 10;
-	private int round;
 	
 	
 	public Room(String name, String password,PlayerInfo owner) {
@@ -111,20 +107,42 @@ public class Room implements Runnable{
 		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
 		
 		sendWhiteCard();
-//		try {
-//			Thread.sleep(200);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		round=0;
-//	//	while (round <MAX_ROUNDS) {
-//			String black_card=game.draw_blackCard();
-//			dispatcher.sendMessage("BLACKCARD", black_card, 99);
-//			
-//
-//		//}
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		int round=0;
+		int jury =0;
+	//	while (round <MAX_ROUNDS) {
+		String black_card=game.drawBlackCard();
+		dispatcher.sendMessage("BLACKCARD", black_card, -1);
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		/*
+		dispatcher.sendMessage("NEWJUDGE", "judge", players.get(jury).getPlayerID());		
+		if(jury != players.size())
+			jury++;
+		else
+			jury =0;
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		dispatcher.sendMessage("START_ROUND", "round", -1);
+			*/
+
+		//}
 		
 	}
 

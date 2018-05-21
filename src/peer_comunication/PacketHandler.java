@@ -13,6 +13,7 @@ import javax.crypto.SecretKey;
 
 import player.Player;
 import utils.DesEncrypter;
+import utils.Utils;
 
 
 public class PacketHandler  implements Runnable{
@@ -21,18 +22,16 @@ public class PacketHandler  implements Runnable{
 	private DatagramPacket packet;
 	private String[] header_split;
 	private String content;
-	private SecretKey secretKey;
 	private int sender_id;
 	DesEncrypter encrypter;
 	private int player_id;
 
-	public PacketHandler(DatagramPacket packet,SecretKey secretKey, int player_id) {
+	public PacketHandler(DatagramPacket packet,SecretKey secret_key, int player_id) {
 		this.packet = packet;
-		this.secretKey= secretKey;
 		this.player_id = player_id;
 		
 		try {
-			this.encrypter= new DesEncrypter(secretKey);
+			this.encrypter= new DesEncrypter(secret_key);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -55,14 +54,18 @@ public class PacketHandler  implements Runnable{
 			BLACKCARD_handler();
 			break;
 			
+		case "START_ROUND":
+			STARTROUND_handler();
+			break;
+			
 		case "WHITECARD":
 			break;
 			
 		case "PICKWHITECARD":
-			PICKWHITECARD_handler();
 			break;
 			
 		case "NEWJUDGE":
+			NEWJUDGE_handler();
 			break;
 		
 		case "INITIALCARDS":
@@ -75,10 +78,18 @@ public class PacketHandler  implements Runnable{
 
 }
 
-	private void PICKWHITECARD_handler() {
-
+	private void STARTROUND_handler() {
+		Player.startRound();
 		
 	}
+
+
+	private void NEWJUDGE_handler() {
+		if(player_id == sender_id)
+			Player.isJury(true);
+		
+	}
+
 
 	private void NEWPLAYER_handler() {
 		System.out.println(content + " has joinded the room");
@@ -86,8 +97,7 @@ public class PacketHandler  implements Runnable{
 	}
 	
 	private void BLACKCARD_handler() {
-		System.out.println("NEW BLACK_CARD"+content);
-		
+		Player.setBlackCard(content);		
 	}
 
 	
@@ -111,13 +121,22 @@ public class PacketHandler  implements Runnable{
 		
 		String message = "";
 		try {
+			
 			message = bufferedReader.readLine();
+			
+			System.out.println("MEEEEEESSSSSSSSSSSSSSSAGGGGGGGGGGGEEEE");
+			System.out.println(message);
 			message= this.encrypter.decrypt(message);
+			
+			if(message !=null) {
 
-			String[] parts = message.split(Message.CRLF);
+
+			String[] parts = message.split(Utils.CRLF);
 			this.header_split=parts[0].split("\\s+");
 			this.sender_id=Integer.parseInt(header_split[1]);
 			this.content=parts[1];
+			
+			}
 		
 		} catch (IOException e) {
 		e.printStackTrace();

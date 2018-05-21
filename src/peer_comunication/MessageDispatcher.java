@@ -5,9 +5,13 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.UnknownHostException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import utils.DesEncrypter;
 import utils.Utils;
 
 public class MessageDispatcher implements Runnable{
@@ -71,25 +75,10 @@ public class MessageDispatcher implements Runnable{
 
 
 	public void sendMessage(String message,String content,int senderID) {
+
+		byte[] packet = createPacket(message,content,senderID);
 		
-		
-		
-		byte[] packet = null;
-		
-		switch(message) {
-		case "NEWPLAYER":
-			packet = Message.NEWPLAYER(content,senderID,secret_key);
-			break;
-			
-		case "INITIALCARDS":
-			packet = Message.INITIALCARDS(content, senderID, secret_key);
-			break;
-		
-		case "BLACKCARD":
-			packet = Message.BLACKCARD(content, senderID, secret_key);
-		default:
-			break;
-		}
+
 		
 		if(packet!=null) {
 			DatagramPacket dpacket=new DatagramPacket(packet,packet.length,mc_address,mc_port);
@@ -100,6 +89,33 @@ public class MessageDispatcher implements Runnable{
 			}
 		}
 		
+	}
+	
+	
+	public byte[] createPacket(String function, String content, int sender_id) {
+		String header=function+" "+sender_id+Utils.CRLF;
+		String message=header + content;
+
+		try {
+			DesEncrypter des= new DesEncrypter(secret_key);
+			message=des.encrypt(message);
+			
+
+			System.out.println("PACKET");
+			System.out.println(message);
+			
+			byte[] packet=message.getBytes();
+			return packet;
+			
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 }
