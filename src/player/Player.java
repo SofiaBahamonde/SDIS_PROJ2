@@ -27,6 +27,7 @@ public class Player {
     private static MessageDispatcher dispatcher;
     private static SecretKey secret_key;
     
+    private static int player_id;
     private static String username;
     private static boolean owner = false;
     
@@ -59,6 +60,9 @@ public class Player {
             case "WELCOME":
                 username = ServerUI.welcome();
                 sendResponse(username);
+                player_id = Integer.parseInt(in.readLine());
+                System.out.println(player_id);
+                
                 break;
                 
             case "MENU":

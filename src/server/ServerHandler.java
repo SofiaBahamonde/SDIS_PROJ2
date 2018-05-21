@@ -2,7 +2,7 @@ package server;
 
 import javax.net.ssl.SSLSocket;
 
-import player.PlayerID;
+import player.PlayerInfo;
 import utils.Utils;
 
 import java.io.BufferedReader;
@@ -11,16 +11,18 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 
-public class RoomHandler implements Runnable {
+public class ServerHandler implements Runnable {
+	
+	static int player_counter =0;
 
-	PlayerID player;
+	PlayerInfo player;
     SSLSocket socket;
     Room room;
     
-    static PrintStream out;
+    PrintStream out;
     BufferedReader in;
 
-    public RoomHandler(SSLSocket socket) {
+    public ServerHandler(SSLSocket socket) {
         this.socket = socket;
     }
 
@@ -50,14 +52,19 @@ public class RoomHandler implements Runnable {
 		sendRequest(room.getPort());
 		sendRequest(room.getAddress());
 		sendRequest(room.getKey());
+		
+		
+		
+		
 	 
     }
     
   
     private void menu() {
+    	boolean stop = false;
     	try {
     		
-    		while(true) {
+    		while(!stop) {
 		        sendRequest("MENU");
 		        
 		        String option = in.readLine();
@@ -68,11 +75,11 @@ public class RoomHandler implements Runnable {
 		        	break;
 		        
 		        case "2":
-		        	enterRoom();
+		        	stop = enterRoom();
 		        	break;
 		        
 		        case "3":
-		        	createRoom();
+		        	stop = createRoom();
 		        	break;
 
 		        default:
@@ -88,7 +95,7 @@ public class RoomHandler implements Runnable {
 		
 	}
 
-	private void createRoom() throws IOException {
+	private boolean createRoom() throws IOException {
     	sendRequest("NEW_ROOM");
     	
     	String room_name1 = in.readLine();
@@ -98,10 +105,12 @@ public class RoomHandler implements Runnable {
     	this.room = Server.getRoom(room_name1);
     	
     	room();
+    	
+    	return true;
 		
 	}
 
-	private void enterRoom() throws IOException {
+	private boolean enterRoom() throws IOException {
 		sendRequest("ENTER_ROOM");
     	String room_name2 = in.readLine();
     	
@@ -114,13 +123,13 @@ public class RoomHandler implements Runnable {
     			
     			if(!room.getPassword().equals(password2)) {
     				sendRequest("EEROR: INVALID_PW");
-    				return;
+    				return false;
     			}
     		}else
     			sendRequest("");
     	}else {
     		sendRequest("ERROR: INVALID_ROOM");
-    		return;
+    		return false;
     	}
     	
     	room.addPlayer(player);
@@ -130,6 +139,8 @@ public class RoomHandler implements Runnable {
     	
     	this.room = room;
     	room();
+    	
+    	return true;
     	
 		
 	}
@@ -148,9 +159,12 @@ public class RoomHandler implements Runnable {
            
            String username = in.readLine();
            
-           player = new PlayerID(username,socket);
+           player = new PlayerInfo(username,socket);
            
            Server.addPlayer(player);
+           
+           sendRequest(Integer.toString(player_counter));
+           player_counter++;
            
 
        } catch (IOException e) {
@@ -159,7 +173,7 @@ public class RoomHandler implements Runnable {
 		
 	}
 
-	private static void sendRequest(String request){
+	private void sendRequest(String request){
         out.println(request);
         out.flush();
     }
