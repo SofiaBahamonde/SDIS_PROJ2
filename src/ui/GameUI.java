@@ -2,8 +2,6 @@ package ui;
 
 import java.util.ArrayList;
 
-import game.Black_Card;
-import game.White_Card;
 
 public class GameUI {
 	
