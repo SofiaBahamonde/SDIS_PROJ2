@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import javax.crypto.SecretKey;
 
+import game.GameLogic;
+
 public class Room implements Runnable{
 	private static int room_counter=0;
 	
@@ -16,6 +18,7 @@ public class Room implements Runnable{
 	private String password;
 	private PlayerInfo owner;
 	private ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
+	private GameLogic game;
 	
 	// communication fields
 	private String address;
@@ -94,6 +97,11 @@ public class Room implements Runnable{
 	@Override
 	public void run() {
 		System.out.println("Game has started - room " + name);
+		game=new GameLogic("black_cards.txt","white_cards.txt");
+		
+		while(true) {
+			
+		}
 		
 	}
 }

@@ -23,7 +23,7 @@ public class GameLogic {
 	ArrayList<White_Card> used_white_cards;
 	
 	
-	GameLogic(String black_cards, String white_cards){
+	public GameLogic(String black_cards, String white_cards){
 		black_cards_database=new ArrayList<Black_Card>();
 		white_cards_database=new ArrayList<White_Card>();
 		used_black_cards=new ArrayList<Black_Card>();
