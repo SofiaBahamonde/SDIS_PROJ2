@@ -36,7 +36,7 @@ public class Message {
 		}
 		
 	}
-	
+	//other players send them choice
 	public static void WHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="WHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
@@ -57,6 +57,8 @@ public class Message {
 		}
 	
 	}
+	
+	//a new card draw from the deck
 	public static void PICKWHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="PICKWHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
