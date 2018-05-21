@@ -6,7 +6,9 @@ public class PlayerInfo {
 	
 	String username;
 	SSLSocket socket;
-	private int player_id;
+	boolean owner = false;
+	
+	
 	
 	public PlayerInfo(String username, SSLSocket socket) {
 		this.username = username;
@@ -16,6 +18,14 @@ public class PlayerInfo {
 	@Override
 	public String toString() {
 		return username;
+	}
+	
+	public boolean isOwner() {
+		return owner;
+	}
+	
+	public void setOwner() {
+		owner = true;
 	}
 
 

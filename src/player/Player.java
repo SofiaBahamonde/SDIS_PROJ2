@@ -61,8 +61,6 @@ public class Player {
                 username = ServerUI.welcome();
                 sendResponse(username);
                 player_id = Integer.parseInt(in.readLine());
-                System.out.println(player_id);
-                
                 break;
                 
             case "MENU":
@@ -119,12 +117,13 @@ public class Player {
                 dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
                 new Thread(dispatcher).start();
                 
-                Message.NEWPLAYER(username, 13, secret_key);
+                Message.NEWPLAYER(username, player_id, secret_key);
                 
                 if(owner) {
 	                data = ServerUI.startGame();
 	                sendResponse(data);
                 }
+                
             	break;
             	
             default:
