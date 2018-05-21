@@ -173,10 +173,12 @@ public class Player {
 	}
 
 	public static void startRound() {
+		String choosen_card;
 		if(jury) {
 			System.out.println("Waiting for Players answers");
-		}else
-			GameUI.makePlay(black_card, white_cards);
-		
+		}else {
+			choosen_card=GameUI.makePlay(black_card, white_cards);
+			white_cards.remove(choosen_card);
+		}
 	}
 }

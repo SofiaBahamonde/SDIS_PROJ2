@@ -19,7 +19,7 @@ public class GameUI {
         String option = System.console().readLine();
         System.out.print("\n");
         int o = Integer.parseInt(option);
-        return cards.get(o);
+        return cards.get(o-1);
         
 	}
 

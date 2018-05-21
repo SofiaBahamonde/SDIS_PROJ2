@@ -109,8 +109,6 @@ public class PacketHandler  implements Runnable{
 			for(int i=0; i<cards.length;i++) {
 				Player.addWhiteCard(cards[i]);
 			}
-			
-			Player.showWhiteCards();
 		
 		}
 		
