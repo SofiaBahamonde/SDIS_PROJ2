@@ -44,7 +44,7 @@ public class ServerHandler implements Runnable {
 
     }
     
-    private void room() {
+    private void room() throws IOException {
 		sendRequest("ROOM");
 		sendRequest(room.toString());
 		sendRequest("STOP");
@@ -53,8 +53,11 @@ public class ServerHandler implements Runnable {
 		sendRequest(room.getAddress());
 		sendRequest(room.getKey());
 		
-		
-		
+		if(player.isOwner()) {
+			in.readLine();
+			new Thread(room).start();
+			
+		}
 		
 	 
     }
@@ -103,6 +106,8 @@ public class ServerHandler implements Runnable {
     	
     	Server.addRoom(room_name1, password1,player);
     	this.room = Server.getRoom(room_name1);
+    
+    	player.setOwner();
     	
     	room();
     	
@@ -132,12 +137,12 @@ public class ServerHandler implements Runnable {
     		return false;
     	}
     	
-    	room.addPlayer(player);
-    	System.out.println("Player has joined " + room_name2 + " - " + player.toString());
-    	
-    	sendRequest("SUCCESS");
     	
     	this.room = room;
+    	Server.joinRoom(player,room);
+  
+    	sendRequest("SUCCESS");
+
     	room();
     	
     	return true;

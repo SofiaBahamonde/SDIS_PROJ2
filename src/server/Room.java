@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import javax.crypto.SecretKey;
 
-public class Room {
+public class Room implements Runnable{
 	private static int room_counter=0;
 	
 	// base fields
@@ -89,5 +89,11 @@ public class Room {
 
 	public void addPlayer(PlayerInfo player) {
 		players.add(player);
+	}
+
+	@Override
+	public void run() {
+		System.out.println("Game has started - room " + name);
+		
 	}
 }

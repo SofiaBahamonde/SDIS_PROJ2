@@ -75,8 +75,6 @@ public class Player {
                 username = ServerUI.welcome();
                 sendResponse(username);
                 player_id = Integer.parseInt(in.readLine());
-                System.out.println(player_id);
-                
                 break;
                 
             case "MENU":
@@ -139,6 +137,7 @@ public class Player {
 	                data = ServerUI.startGame();
 	                sendResponse(data);
                 }
+                
             	break;
             	
             default:
