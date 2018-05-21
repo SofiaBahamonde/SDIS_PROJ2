@@ -1,6 +1,6 @@
 package server;
 
-import player.PlayerID;
+import player.PlayerInfo;
 import utils.SecretKeyGenerator;
 import utils.Utils;
 
@@ -14,8 +14,8 @@ public class Room {
 	// base fields
 	private String name;
 	private String password;
-	private PlayerID owner;
-	private ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	private PlayerInfo owner;
+	private ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
 	
 	// communication fields
 	private String address;
@@ -24,7 +24,7 @@ public class Room {
 	
 	
 	
-	public Room(String name, String password,PlayerID owner) {
+	public Room(String name, String password,PlayerInfo owner) {
 		this.name = name;
 		this.password = password;
 		this.owner = owner;
@@ -34,6 +34,8 @@ public class Room {
 		
 		SecretKey secretKey=SecretKeyGenerator.generateSecretKey();
 		this.secret_key =SecretKeyGenerator.keyToString(secretKey);
+		
+		room_counter++;
 
 		
 	}
@@ -49,7 +51,7 @@ public class Room {
 		str += "owner: " + owner.toString() + "\n";
 		
 		str += "players:\n";
-		for(PlayerID p:players) 
+		for(PlayerInfo p:players) 
 			str += "  " + p.toString()+ "\n";
 		
 		str += "--------------------------------------\n"; 
@@ -85,7 +87,7 @@ public class Room {
 	}
 
 
-	public void addPlayer(PlayerID player) {
+	public void addPlayer(PlayerInfo player) {
 		players.add(player);
 	}
 }

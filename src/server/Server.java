@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import javax.net.ssl.*;
 
 import utils.Utils;
-import player.PlayerID;
+import player.PlayerInfo;
 
 public class Server{
 	
 
-	static ArrayList<PlayerID> players = new ArrayList<PlayerID>();
+	static ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
 	static ArrayList<Room> rooms = new ArrayList<Room>();
 	
 	
@@ -23,24 +23,24 @@ public class Server{
 	
 	    while(true) {
 	      SSLSocket socket = (SSLSocket) ss.accept();
-	      new Thread( new RoomHandler(socket)).start();
+	      new Thread( new ServerHandler(socket)).start();
 	    }
 
 
     }
     
-	public static void addPlayer(PlayerID player) {
+	public static void addPlayer(PlayerInfo player) {
 		System.out.println("New player has join the server - " + player.toString());
 		players.add(player);
 		
 	}
 	
-	public static void addRoom(String name, String password, PlayerID owner) {
+	public static void addRoom(String name, String password, PlayerInfo owner) {
 		System.out.println("New room created - " + name);
 		rooms.add(new Room(name, password,owner));	
 	}
 
-	public static ArrayList<PlayerID> getPlayers() {
+	public static ArrayList<PlayerInfo> getPlayers() {
 		return players;
 	}
 
