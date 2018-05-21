@@ -100,11 +100,8 @@ public class MessageDispatcher implements Runnable{
 			DesEncrypter des= new DesEncrypter(secret_key);
 			message=des.encrypt(message);
 			
-
-			System.out.println("PACKET");
-			System.out.println(message);
-			
 			byte[] packet=message.getBytes();
+
 			return packet;
 			
 		} catch (InvalidKeyException e) {

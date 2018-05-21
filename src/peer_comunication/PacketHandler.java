@@ -116,31 +116,21 @@ public class PacketHandler  implements Runnable{
 		
 	}
 	private void MessageExtractor() {
-		ByteArrayInputStream stream = new ByteArrayInputStream(packet.getData());
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
 		
-		String message = "";
-		try {
-			
-			message = bufferedReader.readLine();
-			
-			System.out.println("MEEEEEESSSSSSSSSSSSSSSAGGGGGGGGGGGEEEE");
-			System.out.println(message);
-			message= this.encrypter.decrypt(message);
-			
-			if(message !=null) {
-
-
-			String[] parts = message.split(Utils.CRLF);
-			this.header_split=parts[0].split("\\s+");
-			this.sender_id=Integer.parseInt(header_split[1]);
-			this.content=parts[1];
-			
-			}
+		byte[] buffer = packet.getData();
+		String message =new String(buffer, 0, packet.getLength());
 		
-		} catch (IOException e) {
-		e.printStackTrace();
-	}
+
+		
+		message = this.encrypter.decrypt(message);
+		
+		
+		String[] parts = message.split(Utils.CRLF);
+		this.header_split=parts[0].split("\\s+");
+		this.sender_id=Integer.parseInt(header_split[1]);
+		this.content=parts[1];
+		
+		
 	}
 
 

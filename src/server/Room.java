@@ -126,7 +126,7 @@ public class Room implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		/*
+		
 		dispatcher.sendMessage("NEWJUDGE", "judge", players.get(jury).getPlayerID());		
 		if(jury != players.size())
 			jury++;
@@ -140,7 +140,7 @@ public class Room implements Runnable{
 		}
 		
 		dispatcher.sendMessage("START_ROUND", "round", -1);
-			*/
+			
 
 		//}
 		
