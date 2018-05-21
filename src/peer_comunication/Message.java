@@ -6,14 +6,13 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-import player.Player;
 import utils.DesEncrypter;
 
 public class Message {
 	
 	public static final String CRLF = "\r"+"\n";
 	
-	public static void BLACKCARD(String content,int senderID,SecretKey secretKey) {
+	public static byte[] BLACKCARD(String content,int senderID,SecretKey secretKey) {
 		String header="BLACKCARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
@@ -22,7 +21,7 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
-			Player.getDispatcher().sendMessage(packet);
+			return packet;
 			
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
@@ -35,9 +34,12 @@ public class Message {
 			e.printStackTrace();
 		}
 		
+		return null;
+		
 	}
-	//other players send them choice
-	public static void WHITECARD(String content,int senderID,SecretKey secretKey) {
+
+	
+	public static byte[] WHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="WHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
@@ -46,7 +48,7 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
-			Player.getDispatcher().sendMessage(packet);
+			return packet;
 			
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
@@ -55,11 +57,13 @@ public class Message {
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 	
 	}
-	
-	//a new card draw from the deck
-	public static void PICKWHITECARD(String content,int senderID,SecretKey secretKey) {
+
+
+	public static byte[] PICKWHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="PICKWHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
 		System.out.println("MESSAGE: "+message);
@@ -68,30 +72,9 @@ public class Message {
 			message=des.encrypt(message);
 			System.out.println("ENCRYPTED MESSAGE: "+message);
 			byte[] packet=message.getBytes();
-			Player.getDispatcher().sendMessage(packet);
+			return packet;
 			
 		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void NEWPLAYER(String content,int senderID,SecretKey secretKey) {
-		String header="NEWPLAYER"+" "+senderID+CRLF;
-		String message=header + content;
-		//System.out.println("MESSAGE: "+message);
-		try {
-			DesEncrypter des= new DesEncrypter(secretKey);
-			message=des.encrypt(message);
-			//System.out.println("ENCRYPTED MESSAGE: "+message);
-			byte[] packet=message.getBytes();
-			Player.getDispatcher().sendMessage(packet);
-			
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -99,25 +82,50 @@ public class Message {
 			e.printStackTrace();
 		}
 		
+		return null;
 	}
 	
-	public static void NEWJUDGE(String content,int senderID,SecretKey secretKey) {
-		String header="NEWJUDGE"+" "+senderID+CRLF;
+	public static byte[] NEWPLAYER(String content,int senderID,SecretKey secretKey) {
+		String header="NEWPLAYER"+" "+senderID+CRLF;
 		String message=header + content;
+		
 		try {
 			DesEncrypter des= new DesEncrypter(secretKey);
 			message=des.encrypt(message);
 			byte[] packet=message.getBytes();
-			Player.getDispatcher().sendMessage(packet);
+			return packet;
 			
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
+		
+	}
+	
+	public static byte[] NEWJUDGE(String content,int senderID,SecretKey secretKey) {
+		String header="NEWJUDGE"+" "+senderID+CRLF;
+		String message=header + content;
+		try {
+			DesEncrypter des= new DesEncrypter(secretKey);
+			message=des.encrypt(message);
+			byte[] packet=message.getBytes();
+			return packet;
+			
+		} catch (InvalidKeyException e) {
+			
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 		
 	}
 	

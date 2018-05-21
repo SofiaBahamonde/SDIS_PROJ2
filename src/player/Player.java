@@ -132,10 +132,10 @@ public class Player {
                 String mcast_addr = in.readLine();
                 secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
                 
-                dispatcher = new MessageDispatcher(port,mcast_addr,secret_key);
+                dispatcher = new MessageDispatcher(Integer.parseInt(port),mcast_addr,secret_key);
                 new Thread(dispatcher).start();
                 
-                Message.NEWPLAYER(username, player_id, secret_key);
+                dispatcher.sendMessage("NEWPLAYER",username, player_id, secret_key);
                 
                 if(owner) {
 	                data = ServerUI.startGame();

@@ -5,29 +5,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Random;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
-import peer_comunication.Message;
-import utils.DesEncrypter;
-import utils.SecretKeyGenerator;
 
 
 public class GameLogic {
-	ArrayList<Black_Card> black_cards_database;
-	ArrayList<White_Card> white_cards_database;
-	ArrayList<Black_Card> used_black_cards;
-	ArrayList<White_Card> used_white_cards;
+	ArrayList<String> black_cards_database;
+	ArrayList<String> white_cards_database;
+	ArrayList<String> used_black_cards;
+	ArrayList<String> used_white_cards;
 	
 	
 	public GameLogic(String black_cards, String white_cards){
-		black_cards_database=new ArrayList<Black_Card>();
-		white_cards_database=new ArrayList<White_Card>();
-		used_black_cards=new ArrayList<Black_Card>();
-		used_white_cards=new ArrayList<White_Card>();
+		black_cards_database=new ArrayList<String>();
+		white_cards_database=new ArrayList<String>();
+		used_black_cards=new ArrayList<String>();
+		used_white_cards=new ArrayList<String>();
 		
 		
 		try {
@@ -43,23 +37,21 @@ public class GameLogic {
 		try (BufferedReader br = new BufferedReader(new FileReader(black_cards))) {
 		    String line;
 		    while ((line = br.readLine()) != null) {
-		       Black_Card bc=new Black_Card(line);
-		       black_cards_database.add(bc);
+		       black_cards_database.add(line);
 		    }
 		}
 		try (BufferedReader br = new BufferedReader(new FileReader(white_cards))) {
 		    String line;
 		    while ((line = br.readLine()) != null) {
-		       White_Card wc=new White_Card(line);
-		       white_cards_database.add(wc);
+		       white_cards_database.add(line);
 		    }
 		}	
 		
 		
 	}
 	
-	public Black_Card draw_blackCard() {
-		Black_Card bc;
+	public String draw_blackCard() {
+		String bc;
 		do {
 			Random rand = new Random();
 
@@ -71,11 +63,11 @@ public class GameLogic {
 		return bc;
 	}
 	
-	public ArrayList<White_Card> makePlay(int number_players){
-		ArrayList<White_Card> white_cards=new ArrayList<White_Card>();
+	public ArrayList<String> getWhiteCards(int card_number){
+		ArrayList<String> white_cards=new ArrayList<String>();
 		
-		for(int i=0; i<number_players; i++) {
-			White_Card wc;
+		for(int i=0; i<card_number; i++) {
+			String wc;
 			do {
 				Random rand = new Random();
 
@@ -89,37 +81,6 @@ public class GameLogic {
 		return white_cards;
 	}
 	
-	
-	private void print_database() {
-		for(int i=0; i< black_cards_database.size();i++) {
-			System.out.println(black_cards_database.get(i).getText());
-		}
-	}
-	
-
-	public static void main(String [] args) throws Exception {
-		GameLogic gl=new GameLogic("black_cards.txt","white_cards.txt");
-		ArrayList<White_Card> bc=gl.makePlay(30);
-		SecretKey secretKey=SecretKeyGenerator.generateSecretKey();
-		String ola =SecretKeyGenerator.keyToString(secretKey);
-		secretKey =SecretKeyGenerator.decodeKeyFromString(ola);
-		System.out.println("KEY "+ola);
-		DesEncrypter des= new DesEncrypter(secretKey);
-	for(int i=0; i< bc.size();i++) {
-		System.out.println("ORIGINAL:");
-		System.out.println(bc.get(i).getText());
-		System.out.println("ENCRYPTED:");
-		String temp=des.encrypt(bc.get(i).getText());
-		System.out.println(temp);
-		System.out.println("DESENCRYPTED:");
-		temp=des.decrypt(temp);
-		System.out.println(temp);
-		
-	
-		}
-	}
-	
-
 	
 
 }

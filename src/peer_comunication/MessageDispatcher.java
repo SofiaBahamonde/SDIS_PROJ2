@@ -18,9 +18,9 @@ public class MessageDispatcher implements Runnable{
 	public SecretKey secret_key;
 	public static final int PACKET_SIZE=2048;
 	
-	public MessageDispatcher(String mc_port,String mc_address, SecretKey secret_key) {
+	public MessageDispatcher(int mc_port,String mc_address, SecretKey secret_key) {
 		
-		this.mc_port=Integer.parseInt(mc_port);
+		this.mc_port=mc_port;
 		this.secret_key = secret_key;
 		
 		try {
@@ -60,7 +60,18 @@ public class MessageDispatcher implements Runnable{
 	}
 
 
-	public void sendMessage(byte[] packet) {
+	public void sendMessage(String message,String content,int senderID,SecretKey secretKey) {
+		
+		byte[] packet = null;
+		
+		switch(message) {
+		case "NEWPLAYER":
+			packet = Message.NEWPLAYER(content,senderID,secretKey);
+			break;
+		default:
+			break;
+		}
+		
 		DatagramPacket dpacket=new DatagramPacket(packet,packet.length,mc_address,mc_port);
 		try {
 			mc_socket.send(dpacket);
