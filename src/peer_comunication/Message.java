@@ -120,5 +120,26 @@ public class Message {
 		}
 		
 	}
+	
+	public static void FIVEWHITECARDS(String content,int senderID,SecretKey secretKey) {
+		String header="FIVEWHITECARDS"+" "+senderID+CRLF;
+		String message=header + content;
+		System.out.println("MESSAGE: "+message);
+		try {
+			DesEncrypter des= new DesEncrypter(secretKey);
+			message=des.encrypt(message);
+			System.out.println("ENCRYPTED MESSAGE: "+message);
+			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
+			
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
+	
+	}
 
 }
