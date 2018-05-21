@@ -67,7 +67,11 @@ public class Player {
     socket.close();
   }
 
-    private static void paseRequest(String request) throws IOException {
+    public static int getPlayer_id() {
+		return player_id;
+	}
+
+	private static void paseRequest(String request) throws IOException {
     	String data;
     	
         switch (request){

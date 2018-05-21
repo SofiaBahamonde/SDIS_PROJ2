@@ -37,6 +37,7 @@ public class Message {
 		return null;
 		
 	}
+
 	
 	public static byte[] WHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="WHITECARD"+" "+senderID+CRLF;
@@ -60,6 +61,8 @@ public class Message {
 		return null;
 	
 	}
+
+
 	public static byte[] PICKWHITECARD(String content,int senderID,SecretKey secretKey) {
 		String header="PICKWHITECARD"+" "+senderID+CRLF;
 		String message=header + content;
