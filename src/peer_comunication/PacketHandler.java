@@ -60,6 +60,10 @@ public class PacketHandler  implements Runnable{
 			
 		case "NEWJUDGE":
 			break;
+		
+		case "FIVEWHITECARDS":
+			FIVEWHITECARDS_handler();
+			break;
 			
 		
 		}
@@ -81,6 +85,15 @@ public class PacketHandler  implements Runnable{
 	private void NEWPLAYER_handler() {
 		System.out.println(content + " has joinded the room");
 
+	}
+	
+	private void FIVEWHITECARDS_handler() {
+		String[] cards;
+		cards= content.split("|");
+		for(int i=0; i<cards.length;i++) {
+			System.out.println(cards[i]);
+		}
+		
 	}
 
 	private void MessageExtractor() {
