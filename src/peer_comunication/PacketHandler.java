@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 
 import player.Player;
 import utils.DesEncrypter;
-import utils.SecretKeyGenerator;
+
 
 public class PacketHandler  implements Runnable{
 
@@ -42,7 +42,7 @@ public class PacketHandler  implements Runnable{
 
 	public void run() {
 		MessageExtractor();
-		if(senderID!=Player.getPlayer_id()) {
+		
 		switch(header_split[0]) {
 		case "NEWPLAYER":
 			NEWPLAYER_handler();
@@ -55,6 +55,7 @@ public class PacketHandler  implements Runnable{
 			break;
 			
 		case "PICKWHITECARD":
+			PICKWHITECARD_handler();
 			break;
 			
 		case "NEWJUDGE":
@@ -62,13 +63,24 @@ public class PacketHandler  implements Runnable{
 			
 		
 		}
-		}
+		
 
 }
 
+	private void PICKWHITECARD_handler() {
+//		
+//		System.out.println(senderID);
+//
+//		System.out.println(Player.getPlayer_id());
+//		if(senderID ==Player.getPlayer_id()) {
+			System.out.println("White Card: " + content);
+//		}
+		
+	}
+
 	private void NEWPLAYER_handler() {
 		System.out.println(content + " has joinded the room");
-		
+
 	}
 
 	private void MessageExtractor() {

@@ -164,7 +164,7 @@ public class ServerHandler implements Runnable {
            
            String username = in.readLine();
            
-           player = new PlayerInfo(username,socket);
+           player = new PlayerInfo(username,socket, player_counter);
            
            Server.addPlayer(player);
            

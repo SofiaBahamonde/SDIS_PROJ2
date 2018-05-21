@@ -4,15 +4,18 @@ import javax.net.ssl.SSLSocket;
 
 public class PlayerInfo {
 	
+	int id;
 	String username;
 	SSLSocket socket;
 	boolean owner = false;
 	
 	
 	
-	public PlayerInfo(String username, SSLSocket socket) {
+	
+	public PlayerInfo(String username, SSLSocket socket, int id) {
 		this.username = username;
 		this.socket = socket;
+		this.id = id;
 	}
 	
 	@Override
@@ -26,6 +29,10 @@ public class PlayerInfo {
 	
 	public void setOwner() {
 		owner = true;
+	}
+
+	public int getPlayerID() {
+		return id;
 	}
 
 

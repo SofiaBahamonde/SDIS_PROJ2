@@ -4,7 +4,9 @@ import player.PlayerInfo;
 import utils.SecretKeyGenerator;
 import utils.Utils;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
+
 
 import javax.crypto.SecretKey;
 
@@ -39,7 +41,6 @@ public class Room implements Runnable{
 		
 		this.mcast_addr = Utils.addresses.get(room_counter);
 		this.port = Utils.ports.get(room_counter);
-		
 		this.secret_key =SecretKeyGenerator.generateSecretKey();
 		 
 
@@ -104,21 +105,25 @@ public class Room implements Runnable{
 		System.out.println("Game has started - room " + name);
 
 		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key);
-		new Thread(dispatcher).start();
+		
+		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
+		
+		sendWhiteCard();
 
-		game = new GameLogic("black_cards.txt", "white_cards.txt");
-
-		for (int i = 0; i < players.size(); i++) {
-			ArrayList<String> initial_cards = game.getWhiteCards(5);
-
-			for (int j = 0; j < 5; j++) {
-
-			}
-
-		}
 
 		while (true) {
 
+		}
+		
+	}
+
+	private void sendWhiteCard() {
+		
+		for (int i = 0; i < players.size(); i++) {
+			String initial_cards = game.getWhiteCards(5);
+			
+			dispatcher.sendMessage("PICKWHITECARD",initial_cards, players.get(i).getPlayerID());
+			
 		}
 		
 	}

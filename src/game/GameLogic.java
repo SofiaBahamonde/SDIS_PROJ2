@@ -63,8 +63,8 @@ public class GameLogic {
 		return bc;
 	}
 	
-	public ArrayList<String> getWhiteCards(int card_number){
-		ArrayList<String> white_cards=new ArrayList<String>();
+	public String getWhiteCards(int card_number){
+		String white_cards= "";
 		
 		for(int i=0; i<card_number; i++) {
 			String wc;
@@ -76,8 +76,9 @@ public class GameLogic {
 			}
 			while(used_white_cards.contains(wc));
 			used_white_cards.add(wc);
-			white_cards.add(wc);
+			white_cards += wc + "|";
 		}
+		
 		return white_cards;
 	}
 	

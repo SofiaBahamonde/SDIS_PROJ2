@@ -23,11 +23,15 @@ public class MessageDispatcher implements Runnable{
 		this.mc_port=mc_port;
 		this.secret_key = secret_key;
 		
+		
 		try {
 			this.mc_address=InetAddress.getByName(mc_address);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
+		
+
+		connect_to_multicast_socket();
 }
 	
 	
@@ -45,7 +49,8 @@ public class MessageDispatcher implements Runnable{
 	@Override
 	public void run() {
 		byte[] buffer= new byte[PACKET_SIZE];
-		connect_to_multicast_socket();
+
+		
 		while(true) {
 			DatagramPacket mc_packet = new DatagramPacket(buffer, buffer.length);
 			try {
@@ -53,20 +58,26 @@ public class MessageDispatcher implements Runnable{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			//System.out.println("received packet");
+			System.out.println("received packet");
 			new Thread(new PacketHandler(mc_packet,secret_key)).start();
 } 
 		
 	}
 
 
-	public void sendMessage(String message,String content,int senderID,SecretKey secretKey) {
+	public void sendMessage(String message,String content,int senderID) {
+		
+		
 		
 		byte[] packet = null;
 		
 		switch(message) {
 		case "NEWPLAYER":
-			packet = Message.NEWPLAYER(content,senderID,secretKey);
+			packet = Message.NEWPLAYER(content,senderID,secret_key);
+			break;
+			
+		case "PICKWHITECARD":
+			packet = Message.PICKWHITECARD(content, senderID, secret_key);
 			break;
 		default:
 			break;
