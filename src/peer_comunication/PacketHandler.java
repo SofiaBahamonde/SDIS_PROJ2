@@ -22,12 +22,14 @@ public class PacketHandler  implements Runnable{
 	private String[] header_split;
 	private String content;
 	private SecretKey secretKey;
-	private int senderID;
+	private int sender_id;
 	DesEncrypter encrypter;
+	private int player_id;
 
-	public PacketHandler(DatagramPacket packet,SecretKey secretKey) {
+	public PacketHandler(DatagramPacket packet,SecretKey secretKey, int player_id) {
 		this.packet = packet;
 		this.secretKey= secretKey;
+		this.player_id = player_id;
 		
 		try {
 			this.encrypter= new DesEncrypter(secretKey);
@@ -39,6 +41,10 @@ public class PacketHandler  implements Runnable{
 			e.printStackTrace();
 		}
 	}
+
+
+
+
 
 	public void run() {
 		MessageExtractor();
@@ -89,10 +95,14 @@ public class PacketHandler  implements Runnable{
 
 	
 	private void INITIALCARDS_handler() {
-		String[] cards;
-		cards= content.split("_");
-		for(int i=0; i<cards.length;i++) {
-			System.out.println(cards[i]);
+		if(player_id == sender_id) {
+		
+			String[] cards;
+			cards= content.split("_");
+			for(int i=0; i<cards.length;i++) {
+				System.out.println(cards[i]);
+			}
+		
 		}
 		
 	}
@@ -105,7 +115,7 @@ public class PacketHandler  implements Runnable{
 
 			String[] parts = message.split(Message.CRLF);
 			this.header_split=parts[0].split("\\s+");
-			this.senderID=Integer.parseInt(header_split[1]);
+			this.sender_id=Integer.parseInt(header_split[1]);
 			this.content=parts[1];
 		
 		} catch (IOException e) {

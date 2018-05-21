@@ -106,25 +106,25 @@ public class Room implements Runnable{
 	public void run() {
 		System.out.println("Game has started - room " + name);
 
-		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key);
+		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key,-1);
 		
 		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
 		
 		sendWhiteCard();
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		round=0;
-	//	while (round <MAX_ROUNDS) {
-			String black_card=game.draw_blackCard();
-			dispatcher.sendMessage("BLACKCARD", black_card, 99);
-			
-
-		//}
+//		try {
+//			Thread.sleep(200);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		round=0;
+//	//	while (round <MAX_ROUNDS) {
+//			String black_card=game.draw_blackCard();
+//			dispatcher.sendMessage("BLACKCARD", black_card, 99);
+//			
+//
+//		//}
 		
 	}
 
@@ -132,6 +132,13 @@ public class Room implements Runnable{
 		//INITIAL CARDS FOR EACH PLAYER
 		for (int i = 0; i < players.size(); i++) {
 			String initial_cards = game.getWhiteCards(5);
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			
 			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
 			

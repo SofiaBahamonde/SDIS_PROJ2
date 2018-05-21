@@ -55,7 +55,6 @@ public class Player {
 
 		String request = null;
 		while (((request = in.readLine()) != null)) {
-			System.out.println("REQUEST: " + request);
 			paseRequest(request);
 		}
 
@@ -129,7 +128,7 @@ public class Player {
                 String mcast_addr = in.readLine();
                 secret_key = SecretKeyGenerator.decodeKeyFromString(in.readLine());
                 
-                dispatcher = new MessageDispatcher(Integer.parseInt(port),mcast_addr,secret_key);
+                dispatcher = new MessageDispatcher(Integer.parseInt(port),mcast_addr,secret_key,player_id);
                 new Thread(dispatcher).start();
                 
                 dispatcher.sendMessage("NEWPLAYER",username, player_id);

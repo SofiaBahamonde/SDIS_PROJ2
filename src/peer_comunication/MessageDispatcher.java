@@ -8,20 +8,25 @@ import java.net.UnknownHostException;
 
 import javax.crypto.SecretKey;
 
+import utils.Utils;
+
 public class MessageDispatcher implements Runnable{
 
 	
-	public static MulticastSocket mc_socket;
+	static MulticastSocket mc_socket;
 
-	public InetAddress mc_address;
-	public int mc_port;
-	public SecretKey secret_key;
-	public static final int PACKET_SIZE=2048;
+	InetAddress mc_address;
+	int mc_port;
+	SecretKey secret_key;
+
+	private int player_id;
 	
-	public MessageDispatcher(int mc_port,String mc_address, SecretKey secret_key) {
+	
+	public MessageDispatcher(int mc_port,String mc_address, SecretKey secret_key, int player_id) {
 		
 		this.mc_port=mc_port;
 		this.secret_key = secret_key;
+		this.player_id = player_id;
 		
 		
 		try {
@@ -48,7 +53,7 @@ public class MessageDispatcher implements Runnable{
 }
 	@Override
 	public void run() {
-		byte[] buffer= new byte[PACKET_SIZE];
+		byte[] buffer= new byte[Utils.PACKET_SIZE];
 
 		
 		while(true) {
@@ -59,7 +64,7 @@ public class MessageDispatcher implements Runnable{
 				e.printStackTrace();
 			}
 
-			new Thread(new PacketHandler(mc_packet,secret_key)).start();
+			new Thread(new PacketHandler(mc_packet,secret_key,player_id)).start();
 } 
 		
 	}
@@ -86,11 +91,13 @@ public class MessageDispatcher implements Runnable{
 			break;
 		}
 		
-		DatagramPacket dpacket=new DatagramPacket(packet,packet.length,mc_address,mc_port);
-		try {
-			mc_socket.send(dpacket);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(packet!=null) {
+			DatagramPacket dpacket=new DatagramPacket(packet,packet.length,mc_address,mc_port);
+			try {
+				mc_socket.send(dpacket);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

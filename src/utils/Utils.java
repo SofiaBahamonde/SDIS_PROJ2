@@ -8,6 +8,8 @@ public class Utils {
     public static final String HOST = "127.0.0.1";
     public static final int PORT = 8080;
     
+    public static final int PACKET_SIZE=2048;
+    
     public static ArrayList<Integer> ports = new ArrayList<Integer>(){ 
     private static final long serialVersionUID = 1L;
 	{
