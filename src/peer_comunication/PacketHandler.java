@@ -40,12 +40,21 @@ public class PacketHandler  implements Runnable{
 
 	public void run() {
 		MessageExtractor();
-		//System.out.println(message);
-		//System.out.println("STRING DIVIDED "+header_split[0]+ " "+header_split[1]+" MESSAGE:"+this.content);
-		
 		switch(header_split[0]) {
 		case "NEWPLAYER":
 			NEWPLAYER_handler();
+			break;
+		
+		case "BLACKCARD":
+			break;
+			
+		case "WHITECARD":
+			break;
+			
+		case "PICKWHITECARD":
+			break;
+			
+		case "NEWJUDGE":
 			break;
 			
 		

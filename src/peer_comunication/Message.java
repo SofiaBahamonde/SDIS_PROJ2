@@ -98,5 +98,25 @@ public class Message {
 		}
 		
 	}
+	
+	public static void NEWJUDGE(String content,int senderID,SecretKey secretKey) {
+		String header="NEWJUDGE"+" "+senderID+CRLF;
+		String message=header + content;
+		try {
+			DesEncrypter des= new DesEncrypter(secretKey);
+			message=des.encrypt(message);
+			byte[] packet=message.getBytes();
+			Player.getDispatcher().sendMessage(packet);
+			
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }
