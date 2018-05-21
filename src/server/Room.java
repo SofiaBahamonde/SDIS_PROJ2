@@ -30,6 +30,8 @@ public class Room implements Runnable{
 	// game fields
 	private GameLogic game;
 	private MessageDispatcher dispatcher;
+	private static final int MAX_ROUNDS= 10;
+	private int round;
 	
 	
 	public Room(String name, String password,PlayerInfo owner) {
@@ -109,22 +111,31 @@ public class Room implements Runnable{
 		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
 		
 		sendWhiteCard();
-
-
-		while (true) {
-
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		round=0;
+	//	while (round <MAX_ROUNDS) {
+			String black_card=game.draw_blackCard();
+			dispatcher.sendMessage("BLACKCARD", black_card, 99);
+			
+
+		//}
 		
 	}
 
 	private void sendWhiteCard() {
-		
+		//INITIAL CARDS FOR EACH PLAYER
 		for (int i = 0; i < players.size(); i++) {
 			String initial_cards = game.getWhiteCards(5);
 			
 			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
 			
-		}
-		
+		}	
 	}
+	
 }

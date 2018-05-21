@@ -49,6 +49,7 @@ public class PacketHandler  implements Runnable{
 			break;
 		
 		case "BLACKCARD":
+			BLACKCARD_handler();
 			break;
 			
 		case "WHITECARD":
@@ -81,15 +82,20 @@ public class PacketHandler  implements Runnable{
 
 	}
 	
+	private void BLACKCARD_handler() {
+		System.out.println("NEW BLACK_CARD"+content);
+		
+	}
+
+	
 	private void INITIALCARDS_handler() {
 		String[] cards;
-		cards= content.split("&");
+		cards= content.split("_");
 		for(int i=0; i<cards.length;i++) {
 			System.out.println(cards[i]);
 		}
 		
 	}
-
 	private void MessageExtractor() {
 		ByteArrayInputStream stream = new ByteArrayInputStream(packet.getData());
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));

@@ -76,7 +76,7 @@ public class GameLogic {
 			}
 			while(used_white_cards.contains(wc));
 			used_white_cards.add(wc);
-			white_cards += wc + "&";
+			white_cards += wc + "_";
 		}
 		
 		return white_cards;

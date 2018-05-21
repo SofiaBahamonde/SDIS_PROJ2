@@ -79,6 +79,9 @@ public class MessageDispatcher implements Runnable{
 		case "INITIALCARDS":
 			packet = Message.INITIALCARDS(content, senderID, secret_key);
 			break;
+		
+		case "BLACKCARD":
+			packet = Message.BLACKCARD(content, senderID, secret_key);
 		default:
 			break;
 		}

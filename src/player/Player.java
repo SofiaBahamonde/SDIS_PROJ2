@@ -39,9 +39,9 @@ public class Player {
 		String host = Utils.HOST;
 		int port = Utils.PORT;
 
-		if (args.length > 2 || args.length < 2) {
+		if (args.length > 2) {
 			System.out.println("BAD USAGE- The arguments are: Server Ip and Server Port");
-		} else {
+		} else if(args.length==2){
 			host = args[0];
 			port = Integer.parseInt(args[1]);
 		}
