@@ -73,11 +73,24 @@ public class PacketHandler  implements Runnable{
 			INITIALCARDS_handler();
 			break;
 			
+		case "ROUNDWINNER":
+			ROUNDWINNER_handler();
+			break;
+			
 		
 		}
 		
 
 }
+
+	private void ROUNDWINNER_handler() {
+		if(player_id == sender_id) {
+			Player.setPoints();
+			System.out.println(content);
+		}
+		
+	}
+
 
 	private void STARTROUND_handler() {
 		Player.startRound();
@@ -117,7 +130,7 @@ public class PacketHandler  implements Runnable{
 	
 	private void PICKWHITECARD_handler() {
 		if(Player.isJury()) {
-			Player.addAnswer(content);
+			Player.addAnswer(content,sender_id);
 		}
 		
 	}

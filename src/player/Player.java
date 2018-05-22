@@ -35,13 +35,16 @@ public class Player {
     private static String black_card = "";
     private static boolean jury = false;
     private static ArrayList<String>answers= new ArrayList<String>();
+    private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
+    private static int points=0;
     //private int score;
     
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
 	}
-    public static void addAnswer(String card) {
+    public static void addAnswer(String card,int player_id) {
     	answers.add(card);
+    	answers_id.add(player_id);
     }
 
 	public static void main(String[] args) throws Exception {
@@ -178,11 +181,16 @@ public class Player {
 
 	public static void startRound() {
 		String choosen_card;
+		String winner_card;
 		if(jury) {
 			System.out.println("Waiting for Players answers");
 			try {
 				Thread.sleep(10000);
-				GameUI.printAnswers(answers);
+				winner_card=GameUI.printAnswers(answers);
+				int i=answers.indexOf(winner_card);
+				int winner_id= answers_id.get(i);
+				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -196,5 +204,11 @@ public class Player {
 
 	public static boolean isJury() {
 		return jury;
+	}
+	public static int getPoints() {
+		return points;
+	}
+	public static void setPoints() {
+		points ++;
 	}
 }
