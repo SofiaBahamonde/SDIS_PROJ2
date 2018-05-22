@@ -34,11 +34,15 @@ public class Player {
     private static ArrayList<String> white_cards = new ArrayList<String>();
     private static String black_card = "";
     private static boolean jury = false;
+    private static ArrayList<String>answers= new ArrayList<String>();
     //private int score;
     
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
 	}
+    public static void addAnswer(String card) {
+    	answers.add(card);
+    }
 
 	public static void main(String[] args) throws Exception {
 		String host = Utils.HOST;
@@ -176,9 +180,21 @@ public class Player {
 		String choosen_card;
 		if(jury) {
 			System.out.println("Waiting for Players answers");
+			try {
+				Thread.sleep(10000);
+				GameUI.printAnswers(answers);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else {
 			choosen_card=GameUI.makePlay(black_card, white_cards);
 			white_cards.remove(choosen_card);
+			dispatcher.sendMessage("PICKWHITECARD", choosen_card, player_id);
 		}
+	}
+
+	public static boolean isJury() {
+		return jury;
 	}
 }

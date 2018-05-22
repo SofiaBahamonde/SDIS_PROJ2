@@ -22,6 +22,24 @@ public class GameUI {
         return cards.get(o-1);
         
 	}
+	
+	
+	public static String printAnswers(ArrayList<String> cards) {
+		
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("-------- Choose the winner --------\n");
+		showWhiteCards(cards);
+        System.out.print("Option: ");
+        
+        String option = System.console().readLine();
+        System.out.print("\n");
+        int o = Integer.parseInt(option);
+        return cards.get(o-1);
+        
+	}
 
 	public static void showWhiteCards(ArrayList<String> cards) {
 		for(int i=0;i<cards.size();i++) {

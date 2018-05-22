@@ -62,6 +62,7 @@ public class PacketHandler  implements Runnable{
 			break;
 			
 		case "PICKWHITECARD":
+			PICKWHITECARD_handler();
 			break;
 			
 		case "NEWJUDGE":
@@ -110,6 +111,13 @@ public class PacketHandler  implements Runnable{
 				Player.addWhiteCard(cards[i]);
 			}
 		
+		}
+		
+	}
+	
+	private void PICKWHITECARD_handler() {
+		if(Player.isJury()) {
+			Player.addAnswer(content);
 		}
 		
 	}
