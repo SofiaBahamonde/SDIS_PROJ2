@@ -12,6 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import player.Player;
+import server.Room;
 import utils.DesEncrypter;
 import utils.Utils;
 
@@ -76,6 +77,10 @@ public class PacketHandler  implements Runnable{
 		case "ROUNDWINNER":
 			ROUNDWINNER_handler();
 			break;
+		
+		case "ROUNDEND":
+			ROUNDEND_handler();
+			break;
 			
 		
 		}
@@ -83,12 +88,23 @@ public class PacketHandler  implements Runnable{
 
 }
 
+	private void ROUNDEND_handler() {
+		System.out.println("OIIIIIIIIIIIIIIIIIII");
+		if(player_id==-1) {
+			System.out.println("ROUND ENDED");
+			Room.round_end=true;
+		}
+	}
+
+
 	private void ROUNDWINNER_handler() {
+		if(player_id!=-1) {
 		if(player_id == sender_id) {
 			Player.setPoints();
 			System.out.println(content);
 		}
 		
+	}
 	}
 
 
@@ -99,18 +115,22 @@ public class PacketHandler  implements Runnable{
 
 
 	private void NEWJUDGE_handler() {
+		if(player_id!=-1) {
 		if(player_id == sender_id)
 			Player.isJury(true);
 		
 	}
+	}
 
 
 	private void NEWPLAYER_handler() {
+		if(player_id!=-1)
 		System.out.println(content + " has joinded the room");
 
 	}
 	
 	private void BLACKCARD_handler() {
+		if(player_id!=-1)
 		Player.setBlackCard(content);		
 	}
 
@@ -129,10 +149,12 @@ public class PacketHandler  implements Runnable{
 	}
 	
 	private void PICKWHITECARD_handler() {
+		if(player_id!=-1) {
 		if(Player.isJury()) {
 			Player.addAnswer(content,sender_id);
 		}
 		
+	}
 	}
 	private void MessageExtractor() {
 		

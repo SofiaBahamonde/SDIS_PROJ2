@@ -190,6 +190,9 @@ public class Player {
 				int i=answers.indexOf(winner_card);
 				int winner_id= answers_id.get(i);
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
+				Thread.sleep(100);
+				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
+				
 				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

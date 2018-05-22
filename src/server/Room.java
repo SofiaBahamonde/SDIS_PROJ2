@@ -28,6 +28,8 @@ public class Room implements Runnable{
 	// game fields
 	private GameLogic game;
 	private MessageDispatcher dispatcher;
+	private static final int MAX_ROUNDS=10;
+	public static boolean round_end;
 	
 	
 	public Room(String name, String password,PlayerInfo owner) {
@@ -40,6 +42,7 @@ public class Room implements Runnable{
 		this.mcast_addr = Utils.addresses.get(room_counter);
 		this.port = Utils.ports.get(room_counter);
 		this.secret_key =SecretKeyGenerator.generateSecretKey();
+		round_end=false;
 		 
 
 		room_counter++;
@@ -103,6 +106,7 @@ public class Room implements Runnable{
 		System.out.println("Game has started - room " + name);
 
 		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key,-1);
+		new Thread(dispatcher).start();
 		
 		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
 		
@@ -117,7 +121,7 @@ public class Room implements Runnable{
 		
 		int round=0;
 		int jury =0;
-	//	while (round <MAX_ROUNDS) {
+		while (round <MAX_ROUNDS) {
 		String black_card=game.drawBlackCard();
 		dispatcher.sendMessage("BLACKCARD", black_card, -1);
 		
@@ -140,9 +144,11 @@ public class Room implements Runnable{
 		}
 		
 		dispatcher.sendMessage("START_ROUND", "round", -1);
-			
-		
-		//}
+		while(!round_end) {
+			System.out.println(round_end);
+		}
+		System.out.println("FDS ROUND ENDED");
+		}
 		
 	}
 
@@ -159,7 +165,6 @@ public class Room implements Runnable{
 			
 			
 			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
-			
 		}	
 	}
 	
