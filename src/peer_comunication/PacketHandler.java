@@ -13,7 +13,7 @@ import javax.crypto.SecretKey;
 
 import player.Player;
 import server.Room;
-import utils.DesEncrypter;
+import utils.AESEncrypter;
 import utils.Utils;
 
 
@@ -24,7 +24,7 @@ public class PacketHandler  implements Runnable{
 	private String[] header_split;
 	private String content;
 	private int sender_id;
-	DesEncrypter encrypter;
+	AESEncrypter encrypter;
 	private int player_id;
 
 	public PacketHandler(DatagramPacket packet,SecretKey secret_key, int player_id) {
@@ -32,7 +32,7 @@ public class PacketHandler  implements Runnable{
 		this.player_id = player_id;
 		
 		try {
-			this.encrypter= new DesEncrypter(secret_key);
+			this.encrypter= new AESEncrypter(secret_key);
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {

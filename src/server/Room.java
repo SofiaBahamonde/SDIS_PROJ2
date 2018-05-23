@@ -145,7 +145,7 @@ public class Room implements Runnable{
 		
 		dispatcher.sendMessage("START_ROUND", "round", -1);
 		while(!round_end) {
-			System.out.println(round_end);
+			//System.out.println(round_end);
 		}
 		System.out.println("FDS ROUND ENDED");
 		}

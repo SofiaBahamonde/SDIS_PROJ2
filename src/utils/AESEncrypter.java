@@ -13,12 +13,12 @@ import javax.xml.bind.DatatypeConverter;
 
 
 
-public class DesEncrypter {
+public class AESEncrypter {
   
     Cipher ecipher;
     Cipher dcipher;
   
-    public DesEncrypter(SecretKey key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
+    public AESEncrypter(SecretKey key) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException {
         
             ecipher = Cipher.getInstance("AES");
             dcipher = Cipher.getInstance("AES");

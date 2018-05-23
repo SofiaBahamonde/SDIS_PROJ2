@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-import utils.DesEncrypter;
+import utils.AESEncrypter;
 import utils.Utils;
 
 public class MessageDispatcher implements Runnable{
@@ -97,7 +97,7 @@ public class MessageDispatcher implements Runnable{
 		String message=header + content;
 
 		try {
-			DesEncrypter des= new DesEncrypter(secret_key);
+			AESEncrypter des= new AESEncrypter(secret_key);
 			message=des.encrypt(message);
 			
 			byte[] packet=message.getBytes();
