@@ -108,64 +108,55 @@ public class Room implements Runnable{
 		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key,-1);
 		new Thread(dispatcher).start();
 		
-		game = new GameLogic("../black_cards.txt", "../white_cards.txt");
+		game = new GameLogic();
 		
-		sendWhiteCard();
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		sendWhiteCards();
+			
 		int round=0;
 		int jury =0;
 		while (round <MAX_ROUNDS) {
-		String black_card=game.drawBlackCard();
-		dispatcher.sendMessage("BLACKCARD", black_card, -1);
+			
+			String black_card=game.drawBlackCard();
+			dispatcher.sendMessage("BLACKCARD", black_card, -1);
+			
+			sleep(100);
+			
+			dispatcher.sendMessage("NEWJUDGE", "judge", players.get(jury).getPlayerID());		
+			if(jury != players.size())
+				jury++;
+			else
+				jury =0;
+			
+			sleep(100);
 		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		dispatcher.sendMessage("NEWJUDGE", "judge", players.get(jury).getPlayerID());		
-		if(jury != players.size())
-			jury++;
-		else
-			jury =0;
-		
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		dispatcher.sendMessage("START_ROUND", "round", -1);
-		while(!round_end) {
-			//System.out.println(round_end);
-		}
-		System.out.println("FDS ROUND ENDED");
+			dispatcher.sendMessage("START_ROUND", "round", -1);
+			while(!round_end) {
+				//System.out.println(round_end);
+			}
+			System.out.println("FDS ROUND ENDED");
 		}
 		
 	}
 
-	private void sendWhiteCard() {
+	private void sendWhiteCards() {
 		//INITIAL CARDS FOR EACH PLAYER
 		for (int i = 0; i < players.size(); i++) {
 			String initial_cards = game.getWhiteCards(5);
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			
+			sleep(100);
+						
 			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
 		}	
 	}
+	
+
+	private void sleep(int i) {
+		try {
+			Thread.sleep(i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 	
 }

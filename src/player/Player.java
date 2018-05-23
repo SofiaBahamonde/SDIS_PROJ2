@@ -3,7 +3,7 @@ package player;
 import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
-
+import game.GameLogic;
 import peer_comunication.MessageDispatcher;
 import ui.GameUI;
 import ui.ServerUI;
@@ -31,6 +31,8 @@ public class Player {
     private static String username;
     private static boolean owner = false;
     
+    private static GameLogic game;
+      
     private static ArrayList<String> white_cards = new ArrayList<String>();
     private static String black_card = "";
     private static boolean jury = false;
@@ -96,6 +98,8 @@ public class Player {
             	
             case "NEW_ROOM":
             	owner = true;
+            	game = new GameLogic();
+            	
             	data = ServerUI.newRoom();
             	sendResponse(data);
             	
@@ -145,11 +149,13 @@ public class Player {
                 
                 dispatcher.sendMessage("NEWPLAYER",username, player_id);
                 
-                if(owner) {
-	                data = ServerUI.startGame();
-	                sendResponse(data);
+                if(owner) 
+                	System.out.println("Wainting for players to be ready ...");
+                else {
+                	ServerUI.ready();
+                	dispatcher.sendMessage("READY",username,player_id);
                 }
-                
+	             
             	break;
             	
             default:
@@ -157,7 +163,8 @@ public class Player {
         }
     }
 
-    private static void sendResponse(String response){
+
+	private static void sendResponse(String response){
         out.println(response);
         out.flush();
     }
@@ -185,12 +192,12 @@ public class Player {
 		if(jury) {
 			System.out.println("Waiting for Players answers");
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(10000); // fazer alguma coisa mais decente
 				winner_card=GameUI.printAnswers(answers);
 				int i=answers.indexOf(winner_card);
 				int winner_id= answers_id.get(i);
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
-				Thread.sleep(100);
+				Thread.sleep(100); 
 				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
 				
 				
@@ -212,6 +219,16 @@ public class Player {
 		return points;
 	}
 	public static void setPoints() {
+		
 		points ++;
 	}
+	
+	// NEW STUFF
+	public static boolean isOwner() {
+		return owner;
+	}
+	public static GameLogic getGame() {
+		return game;
+	}
+
 }

@@ -68,8 +68,8 @@ public class ServerUI {
 		
 	}
 
-	public static String startGame() {
-		System.out.print("------ PRESS ENTER TO SART GAME ------\n");
+	public static String ready() {
+		System.out.print("--- PRESS ENTER WHEN YOU'RE READY ----\n");
      
         String option = System.console().readLine();
         return option;

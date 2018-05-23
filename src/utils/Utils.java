@@ -11,6 +11,9 @@ public class Utils {
     public static final int PACKET_SIZE=2048;
 	public static final String CRLF = "\r"+"\n";
 	
+	public static String BLACK_CARDS = "../black_cards.txt";
+	public static String WHITE_CARDS =  "../white_cards.txt";
+	
     public static ArrayList<Integer> ports = new ArrayList<Integer>(){ 
     private static final long serialVersionUID = 1L;
 	{

@@ -52,14 +52,7 @@ public class ServerHandler implements Runnable {
 		sendRequest(room.getPort());
 		sendRequest(room.getAddress());
 		sendRequest(room.getKey());
-		
-		if(player.isOwner()) {
-			in.readLine();
-			new Thread(room).start();
-			
-		}
-		
-	 
+		 
     }
     
   
@@ -164,7 +157,7 @@ public class ServerHandler implements Runnable {
            
            String username = in.readLine();
            
-           player = new PlayerInfo(username,socket, player_counter);
+           player = new PlayerInfo(username, player_counter);
            
            Server.addPlayer(player);
            

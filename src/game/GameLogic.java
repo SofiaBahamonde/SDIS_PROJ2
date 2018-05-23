@@ -7,25 +7,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import player.PlayerInfo;
+import ui.GameUI;
+import ui.ServerUI;
+import utils.Utils;
+
 
 
 
 public class GameLogic {
-	ArrayList<String> black_cards_database;
-	ArrayList<String> white_cards_database;
-	ArrayList<String> used_black_cards;
-	ArrayList<String> used_white_cards;
+	ArrayList<String> black_cards_database =new ArrayList<String>();
+	ArrayList<String> white_cards_database =new ArrayList<String>();
+	ArrayList<String> used_black_cards = new ArrayList<String>();
+	ArrayList<String> used_white_cards = new ArrayList<String>();
+	
+    private static ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
+    private static int players_ready =1;
 	
 	
-	public GameLogic(String black_cards, String white_cards){
-		black_cards_database=new ArrayList<String>();
-		white_cards_database=new ArrayList<String>();
-		used_black_cards=new ArrayList<String>();
-		used_white_cards=new ArrayList<String>();
-		
-		
+	public GameLogic(){
 		try {
-			load_databases(black_cards,white_cards);
+			load_databases(Utils.BLACK_CARDS,Utils.WHITE_CARDS);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -48,6 +50,12 @@ public class GameLogic {
 		}	
 		
 		
+	}
+	
+
+	public static void start() {
+		
+		GameUI.startGame();
 	}
 	
 	public String drawBlackCard() {
@@ -81,6 +89,20 @@ public class GameLogic {
 		
 		return white_cards;
 	}
+	
+	public static void addNewPlayer(PlayerInfo playerInfo) {
+		players.add(playerInfo);
+	}
+
+	public static void playerReady() {
+		players_ready++;
+
+		if(players.size() == players_ready && players.size() > 1)
+			start();
+		
+	}
+
+
 	
 	
 

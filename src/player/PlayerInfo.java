@@ -6,15 +6,13 @@ public class PlayerInfo {
 	
 	int id;
 	String username;
-	SSLSocket socket;
 	boolean owner = false;
 	
 	
 	
 	
-	public PlayerInfo(String username, SSLSocket socket, int id) {
+	public PlayerInfo(String username, int id) {
 		this.username = username;
-		this.socket = socket;
 		this.id = id;
 	}
 	

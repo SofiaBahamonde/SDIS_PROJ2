@@ -1,9 +1,5 @@
 package peer_comunication;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -11,7 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import game.GameLogic;
 import player.Player;
+import player.PlayerInfo;
 import server.Room;
 import utils.AESEncrypter;
 import utils.Utils;
@@ -82,11 +80,33 @@ public class PacketHandler  implements Runnable{
 			ROUNDEND_handler();
 			break;
 			
+		case "READY":
+			READY_handler();
+			break;
+			
 		
 		}
 		
 
-}
+	}
+	
+	private void NEWPLAYER_handler() {
+		System.out.println(content + " has joinded the room.");
+		
+		if(Player.isOwner()) 
+			GameLogic.addNewPlayer(new PlayerInfo(content,sender_id));
+
+	}
+
+	private void READY_handler() {
+		System.out.println(content + " is ready.");
+		
+		if(Player.isOwner()) 
+			GameLogic.playerReady();
+
+		
+	}
+
 
 	private void ROUNDEND_handler() {
 		System.out.println("OIIIIIIIIIIIIIIIIIII");
@@ -123,11 +143,7 @@ public class PacketHandler  implements Runnable{
 	}
 
 
-	private void NEWPLAYER_handler() {
-		if(player_id!=-1)
-		System.out.println(content + " has joinded the room");
-
-	}
+	
 	
 	private void BLACKCARD_handler() {
 		if(player_id!=-1)
@@ -160,11 +176,8 @@ public class PacketHandler  implements Runnable{
 		
 		byte[] buffer = packet.getData();
 		String message =new String(buffer, 0, packet.getLength());
-		
 
-		
 		message = this.encrypter.decrypt(message);
-		
 		
 		String[] parts = message.split(Utils.CRLF);
 		this.header_split=parts[0].split("\\s+");
