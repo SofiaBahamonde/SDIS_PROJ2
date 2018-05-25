@@ -56,6 +56,12 @@ public class GameUI {
 		System.console().readLine();
 		
 	}
+
+
+	public static void printResults() {
+		System.out.println("GAME ENDED");
+		System.out.println("------ SCORES ------");
+	}
 	
 	
 

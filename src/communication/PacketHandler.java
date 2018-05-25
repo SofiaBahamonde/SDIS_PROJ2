@@ -76,9 +76,6 @@ public class PacketHandler  implements Runnable{
 				NEWJUDGE_handler();
 				break;
 			
-			case "INITIALCARDS":
-				INITIALCARDS_handler();
-				break;
 				
 			case "ROUNDWINNER":
 				ROUNDWINNER_handler();
@@ -87,12 +84,24 @@ public class PacketHandler  implements Runnable{
 			case "ROUNDEND":
 				ROUNDEND_handler();
 				break;
+			
+			case "GAME_END":
+				GAME_END_handler();
+				break;
 
 		}
 		
 
 	}
 	
+	private void GAME_END_handler() {
+		if(Player.isOwner()) {
+			Player.endGame();
+		}
+		
+	}
+
+
 	private void NEWPLAYER_handler() {
 		System.out.println(content + " has joinded the room.");
 		
@@ -101,6 +110,7 @@ public class PacketHandler  implements Runnable{
 	}
 
 	private void READY_handler() {
+		if(player_id != sender_id) 
 		System.out.println(content + " is ready.");
 		
 		if(Player.isOwner()) 
@@ -118,10 +128,14 @@ public class PacketHandler  implements Runnable{
 
 
 	private void ROUNDEND_handler() {
-		System.out.println("OIIIIIIIIIIIIIIIIIII");
-		if(player_id==-1) {
-			System.out.println("ROUND ENDED");
-			//Room.round_end=true;
+		if(!Player.isJury()) {
+			Player.drawWhiteCard();
+		}
+		else {
+			Player.endJury();
+		}
+		if(Player.isOwner()) {
+			GameLogic.round();
 		}
 	}
 
@@ -153,21 +167,6 @@ public class PacketHandler  implements Runnable{
 
 
 	
-	
-	
-	
-	private void INITIALCARDS_handler() {
-		if(player_id == sender_id) {		
-			String[] cards;
-			cards= content.split("_");
-			
-			for(int i=0; i<cards.length;i++) {
-				Player.addWhiteCard(cards[i]);
-			}
-		
-		}
-		
-	}
 	
 	private void PICKWHITECARD_handler() {
 		if(player_id!=-1) {

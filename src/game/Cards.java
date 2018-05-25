@@ -47,7 +47,7 @@ public class Cards {
 		do {
 			Random rand = new Random();
 
-			int  n = rand.nextInt(black_cards_database.size()) + 1;
+			int  n = rand.nextInt(black_cards_database.size());
 			 bc=black_cards_database.get(n);
 		}
 		while(used_black_cards.contains(bc));
@@ -65,7 +65,7 @@ public class Cards {
 			white_card=white_cards_database.get(n);
 		}
 		while(used_white_cards.contains(white_card));
-		
+		used_white_cards.add(white_card);	
 		return white_card;
 		
 	}

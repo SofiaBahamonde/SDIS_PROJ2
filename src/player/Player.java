@@ -41,7 +41,7 @@ public class Player {
     private static ArrayList<String>answers= new ArrayList<String>();
     private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
     private static int points=0;
-    //private int score;
+ 
     
     public static MessageDispatcher getDispatcher() {
 		return dispatcher;
@@ -217,6 +217,9 @@ public class Player {
 	public static boolean isJury() {
 		return jury;
 	}
+	public static void endJury() {
+		 jury=false;
+	}
 	public static int getPoints() {
 		return points;
 	}
@@ -237,8 +240,16 @@ public class Player {
 		for(int i =0; i<5; i++) 
 			white_cards.add(cards.drawWhiteCard());	
 	}
+	
+	public static void drawWhiteCard() {
+			white_cards.add(cards.drawWhiteCard());	
+	}
 	public static String getBlackCard() {
 		return cards.drawBlackCard();
+	}
+	public static void endGame() {
+		GameUI.printResults();
+		
 	}
 	
 	
