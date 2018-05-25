@@ -1,94 +1,49 @@
 package game;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
+import player.Player;
 import player.PlayerInfo;
 import ui.GameUI;
-import ui.ServerUI;
 import utils.Utils;
 
-
-
-
 public class GameLogic {
-	ArrayList<String> black_cards_database =new ArrayList<String>();
-	ArrayList<String> white_cards_database =new ArrayList<String>();
-	ArrayList<String> used_black_cards = new ArrayList<String>();
-	ArrayList<String> used_white_cards = new ArrayList<String>();
-	
     private static ArrayList<PlayerInfo> players = new ArrayList<PlayerInfo>();
     private static int players_ready =1;
+    
+    private static int round=0;
+    private static int jury=0;
 	
-	
-	public GameLogic(){
-		try {
-			load_databases(Utils.BLACK_CARDS,Utils.WHITE_CARDS);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void load_databases(String black_cards, String white_cards) throws FileNotFoundException, IOException {
-		try (BufferedReader br = new BufferedReader(new FileReader(black_cards))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		       black_cards_database.add(line);
-		    }
-		}
-		try (BufferedReader br = new BufferedReader(new FileReader(white_cards))) {
-		    String line;
-		    while ((line = br.readLine()) != null) {
-		       white_cards_database.add(line);
-		    }
-		}	
-		
-		
-	}
-	
-
 	public static void start() {
 		
 		GameUI.startGame();
+		Player.getDispatcher().sendMessage("START", "start", -1);
+		
+		sleep(100);
+		
+		while (round <Utils.MAX_ROUNDS) {
+			// draw black cards
+			String black_card =Player.getBlackCard();
+			Player.getDispatcher().sendMessage("BLACKCARD", black_card, -1);
+			
+			sleep(100);
+			
+			// choose jury
+			Player.getDispatcher().sendMessage("NEWJUDGE", "jury", players.get(jury).getPlayerID());		
+			if(jury != players.size())
+				jury++;
+			else
+				jury =0;
+			
+			// start round
+			Player.getDispatcher().sendMessage("START_ROUND", "round", -1);
+			
+			round++;
+		}
 	}
 	
-	public String drawBlackCard() {
-		String bc;
-		do {
-			Random rand = new Random();
-
-			int  n = rand.nextInt(black_cards_database.size()) + 1;
-			 bc=black_cards_database.get(n);
-		}
-		while(used_black_cards.contains(bc));
-		used_black_cards.add(bc);
-		return bc;
-	}
 	
-	public String getWhiteCards(int card_number){
-		String white_cards= "";
-		
-		for(int i=0; i<card_number; i++) {
-			String wc;
-			do {
-				Random rand = new Random();
-
-				int  n = rand.nextInt(black_cards_database.size());
-				 wc=white_cards_database.get(n);
-			}
-			while(used_white_cards.contains(wc));
-			used_white_cards.add(wc);
-			white_cards += wc + "_";
-		}
-		
-		return white_cards;
-	}
 	
 	public static void addNewPlayer(PlayerInfo playerInfo) {
 		players.add(playerInfo);
@@ -96,10 +51,21 @@ public class GameLogic {
 
 	public static void playerReady() {
 		players_ready++;
-
-		if(players.size() == players_ready && players.size() > 1)
+		
+		// check if all players are ready
+		if(players.size() == players_ready && players.size() > 2)
 			start();
 		
+	}
+	
+	
+	public static void sleep(int n) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(n);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

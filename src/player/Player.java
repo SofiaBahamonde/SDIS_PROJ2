@@ -3,8 +3,9 @@ package player;
 import javax.crypto.SecretKey;
 import javax.net.ssl.*;
 
+import communication.MessageDispatcher;
+import game.Cards;
 import game.GameLogic;
-import peer_comunication.MessageDispatcher;
 import ui.GameUI;
 import ui.ServerUI;
 import utils.SecretKeyGenerator;
@@ -32,6 +33,7 @@ public class Player {
     private static boolean owner = false;
     
     private static GameLogic game;
+    private static Cards cards = new Cards();
       
     private static ArrayList<String> white_cards = new ArrayList<String>();
     private static String black_card = "";
@@ -230,5 +232,15 @@ public class Player {
 	public static GameLogic getGame() {
 		return game;
 	}
+	
+	public static void getInitialCards() {
+		for(int i =0; i<5; i++) 
+			white_cards.add(cards.drawWhiteCard());	
+	}
+	public static String getBlackCard() {
+		return cards.drawBlackCard();
+	}
+	
+	
 
 }

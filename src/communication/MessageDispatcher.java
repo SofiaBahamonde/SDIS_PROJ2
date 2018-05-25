@@ -1,4 +1,4 @@
-package peer_comunication;
+package communication;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

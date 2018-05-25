@@ -1,4 +1,4 @@
-package peer_comunication;
+package communication;
 
 import java.net.DatagramPacket;
 import java.security.InvalidKeyException;
@@ -45,46 +45,49 @@ public class PacketHandler  implements Runnable{
 		MessageExtractor();
 		
 		switch(header_split[0]) {
-		case "NEWPLAYER":
-			NEWPLAYER_handler();
-			break;
-		
-		case "BLACKCARD":
-			BLACKCARD_handler();
-			break;
+			case "NEWPLAYER":
+				NEWPLAYER_handler();
+				break;
+							
+			case "READY":
+				READY_handler();
+				break;
+							
+			case "START":
+				START_handler();
+				break;
+				
+			case "BLACKCARD":
+				BLACKCARD_handler();
+				break;
+				
+			case "START_ROUND":
+				STARTROUND_handler();
+				break;
+				
+			case "WHITECARD":
+				break;
+				
+			case "PICKWHITECARD":
+				PICKWHITECARD_handler();
+				break;
+				
+			case "NEWJUDGE":
+				NEWJUDGE_handler();
+				break;
 			
-		case "START_ROUND":
-			STARTROUND_handler();
-			break;
+			case "INITIALCARDS":
+				INITIALCARDS_handler();
+				break;
+				
+			case "ROUNDWINNER":
+				ROUNDWINNER_handler();
+				break;
 			
-		case "WHITECARD":
-			break;
-			
-		case "PICKWHITECARD":
-			PICKWHITECARD_handler();
-			break;
-			
-		case "NEWJUDGE":
-			NEWJUDGE_handler();
-			break;
-		
-		case "INITIALCARDS":
-			INITIALCARDS_handler();
-			break;
-			
-		case "ROUNDWINNER":
-			ROUNDWINNER_handler();
-			break;
-		
-		case "ROUNDEND":
-			ROUNDEND_handler();
-			break;
-			
-		case "READY":
-			READY_handler();
-			break;
-			
-		
+			case "ROUNDEND":
+				ROUNDEND_handler();
+				break;
+
 		}
 		
 
@@ -95,7 +98,6 @@ public class PacketHandler  implements Runnable{
 		
 		if(Player.isOwner()) 
 			GameLogic.addNewPlayer(new PlayerInfo(content,sender_id));
-
 	}
 
 	private void READY_handler() {
@@ -103,8 +105,15 @@ public class PacketHandler  implements Runnable{
 		
 		if(Player.isOwner()) 
 			GameLogic.playerReady();
-
-		
+	}
+	
+	private void START_handler() {
+		System.out.println("GAME HAS STARTED");
+		Player.getInitialCards();
+	}
+	
+	private void BLACKCARD_handler() {
+		Player.setBlackCard(content);		
 	}
 
 
@@ -112,7 +121,7 @@ public class PacketHandler  implements Runnable{
 		System.out.println("OIIIIIIIIIIIIIIIIIII");
 		if(player_id==-1) {
 			System.out.println("ROUND ENDED");
-			Room.round_end=true;
+			//Room.round_end=true;
 		}
 	}
 
@@ -145,11 +154,7 @@ public class PacketHandler  implements Runnable{
 
 	
 	
-	private void BLACKCARD_handler() {
-		if(player_id!=-1)
-		Player.setBlackCard(content);		
-	}
-
+	
 	
 	private void INITIALCARDS_handler() {
 		if(player_id == sender_id) {		
