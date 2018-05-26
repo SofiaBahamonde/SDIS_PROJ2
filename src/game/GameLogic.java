@@ -14,8 +14,7 @@ public class GameLogic {
 
 	private static int round = 0;
 	private static int jury = 0;
-	private static boolean round_end = false;
-
+	
 	public static void start() {
 
 		GameUI.startGame();
@@ -75,9 +74,7 @@ public class GameLogic {
 		}
 	}
 
-	public static void end_round() {
-		round_end = true;
-	}
+
 	public static int getNumberPlayers() {
 		return players.size();
 	}

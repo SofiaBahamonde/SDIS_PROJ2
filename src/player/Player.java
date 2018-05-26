@@ -46,13 +46,6 @@ public class Player {
     private static int points=0;
  
     
-    public static MessageDispatcher getDispatcher() {
-		return dispatcher;
-	}
-    public static void addAnswer(String card,int player_id) {
-    	answers.add(card);
-    	answers_id.add(player_id);
-    }
 
 	public static void main(String[] args) throws Exception {
 		String host = Utils.HOST;
@@ -173,15 +166,11 @@ public class Player {
         out.println(response);
         out.flush();
     }
-
-	public static void addWhiteCard(String card) {
-		white_cards.add(card);
-		
+	
+    public static MessageDispatcher getDispatcher() {
+		return dispatcher;
 	}
 
-	public static void showWhiteCards() {
-		GameUI.showWhiteCards(white_cards);
-	}
 
 	public static void setBlackCard(String card) {
 		black_card = card;
@@ -197,7 +186,7 @@ public class Player {
 		if(jury) {
 			System.out.println("Waiting for Players answers");
 			try {
-				Thread.sleep(10000); // fazer alguma coisa mais decente
+				Thread.sleep(10000); 
 				winner_card=GameUI.printAnswers(answers);
 				int i=answers.indexOf(winner_card);
 				int winner_id= answers_id.get(i);
@@ -231,7 +220,7 @@ public class Player {
 		points ++;
 	}
 	
-	// NEW STUFF
+
 	public static boolean isOwner() {
 		return owner;
 	}
@@ -276,6 +265,12 @@ public class Player {
 		}
 			
 	}
+	
+
+    public static void addAnswer(String card,int player_id) {
+    	answers.add(card);
+    	answers_id.add(player_id);
+    }
 	
 	
 

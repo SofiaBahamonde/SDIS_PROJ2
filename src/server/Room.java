@@ -11,7 +11,7 @@ import javax.crypto.SecretKey;
 import communication.MessageDispatcher;
 import game.GameLogic;
 
-public class Room implements Runnable{
+public class Room{
 	private static int room_counter=0;
 	
 	// base fields
@@ -94,53 +94,7 @@ public class Room implements Runnable{
 		players.add(player);
 	}
 
-	@Override
-	public void run() {
-//		System.out.println("Game has started - room " + name);
-//
-//		dispatcher = new MessageDispatcher(port, mcast_addr, secret_key,-1);
-//		new Thread(dispatcher).start();
-//		
-//		game = new GameLogic();
-//		
-//		sendWhiteCards();
-//			
-//		int round=0;
-//		int jury =0;
-//		while (round <MAX_ROUNDS) {
-//			
-//			String black_card=game.drawBlackCard();
-//			dispatcher.sendMessage("BLACKCARD", black_card, -1);
-//			
-//			sleep(100);
-//			
-//			dispatcher.sendMessage("NEWJUDGE", "judge", players.get(jury).getPlayerID());		
-//			if(jury != players.size())
-//				jury++;
-//			else
-//				jury =0;
-//			
-//			sleep(100);
-//		
-//			dispatcher.sendMessage("START_ROUND", "round", -1);
-//			while(!round_end) {
-//				//System.out.println(round_end);
-//			}
-//			System.out.println("FDS ROUND ENDED");
-//		}
-		
-	}
 
-//	private void sendWhiteCards() {
-//		//INITIAL CARDS FOR EACH PLAYER
-//		for (int i = 0; i < players.size(); i++) {
-//			String initial_cards = game.getWhiteCards(5);
-//			sleep(100);
-//						
-//			dispatcher.sendMessage("INITIALCARDS",initial_cards, players.get(i).getPlayerID());
-//		}	
-//	}
-//	
 
 	
 }

@@ -52,7 +52,7 @@ public class GameUI {
 
 
 	public static void startGame() {
-		System.out.print("ALL PPLAYERS ARE READY!\n");
+		System.out.print("ALL PLAYERS ARE READY!\n");
 		System.out.print("------ PRESS ENTER TO START ------\n");
 		
 		System.console().readLine();
