@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 public class GameUI {
 	
-	public static String makePlay(String card,ArrayList<String> cards) {
-		
+	public static String makePlay(String card,ArrayList<String> cards,int points) {
+		System.out.print("\n");
+		System.out.print("\n");
+		System.out.print("Your Score is "+points);
 		System.out.print("\n");
 		System.out.print("\n");
 		System.out.println("Sentence: " + card);

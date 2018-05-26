@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 
@@ -40,6 +41,8 @@ public class Player {
     private static boolean jury = false;
     private static ArrayList<String>answers= new ArrayList<String>();
     private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
+    private static ArrayList<Integer>scores =new ArrayList<Integer>();
+    private static ArrayList<Integer>scores_id =new ArrayList<Integer>();
     private static int points=0;
  
     
@@ -208,7 +211,7 @@ public class Player {
 				e.printStackTrace();
 			}
 		}else {
-			choosen_card=GameUI.makePlay(black_card, white_cards);
+			choosen_card=GameUI.makePlay(black_card, white_cards,points);
 			white_cards.remove(choosen_card);
 			dispatcher.sendMessage("PICKWHITECARD", choosen_card, player_id);
 		}
@@ -250,6 +253,28 @@ public class Player {
 	public static void endGame() {
 		GameUI.printResults();
 		
+	}
+	public static void sendScore() {
+		Player.dispatcher.sendMessage("SCORE", ""+points, player_id);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} 
+	}
+	public static void addScore(int i, int sender_id) {
+		scores.add(i);
+		scores_id.add(sender_id);
+		if(scores.size()==GameLogic.getNumberPlayers()-1) {
+			scores.add(points);
+			scores_id.add(player_id);
+			int max=Collections.max(scores);
+			System.out.println("THE MAX IS"+ max);
+			int winner_id= scores.indexOf(max);
+			System.out.println("THE Winner IS"+ winner_id);
+			Player.dispatcher.sendMessage("WINNER","you won with "+max+" points",winner_id);
+		}
+			
 	}
 	
 	

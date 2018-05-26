@@ -78,5 +78,8 @@ public class GameLogic {
 	public static void end_round() {
 		round_end = true;
 	}
+	public static int getNumberPlayers() {
+		return players.size();
+	}
 
 }
