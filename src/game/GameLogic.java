@@ -1,7 +1,6 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import player.Player;
 import player.PlayerInfo;
@@ -20,11 +19,10 @@ public class GameLogic {
 		GameUI.startGame();
 		Player.getDispatcher().sendMessage("START", "start", -1);
 
-		sleep(100);
+		Utils.sleep(100);
 
 		round();
 
-		//}
 	}
 
 	public static void round() {
@@ -33,7 +31,7 @@ public class GameLogic {
 		String black_card = Player.getBlackCard();
 		Player.getDispatcher().sendMessage("BLACKCARD", black_card, -1);
 
-		sleep(100);
+		Utils.sleep(100);
 
 		// choose jury
 		Player.getDispatcher().sendMessage("NEWJUDGE", "jury", players.get(jury).getPlayerID());
@@ -43,7 +41,7 @@ public class GameLogic {
 			jury = 0;
 
 		// start round
-		sleep(100);
+		Utils.sleep(100);
 		Player.getDispatcher().sendMessage("START_ROUND", "round", -1);
 		round++;
 	}
@@ -65,18 +63,13 @@ public class GameLogic {
 
 	}
 
-	public static void sleep(int n) {
-		try {
-			TimeUnit.MILLISECONDS.sleep(n);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-
 	public static int getNumberPlayers() {
 		return players.size();
+	}
+
+	public void addScore(int score, int player_id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

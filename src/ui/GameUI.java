@@ -26,20 +26,25 @@ public class GameUI {
 	}
 	
 	
-	public static String printAnswers(ArrayList<String> cards) {
+	public static int printAnswers(ArrayList<String> cards) {
+		int option_int=0;
 		
-		System.out.print("\n");
-		System.out.print("\n");
-		System.out.print("\n");
-		System.out.print("\n");
-		System.out.print("-------- Choose the winner --------\n");
-		showWhiteCards(cards);
-        System.out.print("Option: ");
+		do {
+			System.out.print("\n");
+			System.out.print("\n");
+			System.out.print("\n");
+			System.out.print("\n");
+			System.out.print("-------- Choose the winner --------\n");
+			showWhiteCards(cards);
+	        System.out.print("Option: ");
+	        
+	        String option = System.console().readLine();
+	        option_int = Integer.parseInt(option);
         
-        String option = System.console().readLine();
+		}while(option_int <=0 || option_int>cards.size());
+			
         System.out.print("\n");
-        int o = Integer.parseInt(option);
-        return cards.get(o-1);
+        return option_int;
         
 	}
 

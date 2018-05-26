@@ -111,20 +111,15 @@ public class PacketHandler  implements Runnable{
 
 
 	private void SCORE_handler() {
-//		if(Player.isOwner()) {
-//		Player.addScore(Integer.parseInt(content),sender_id);
-//		}
-//		
+		if(Player.isOwner()) {
+			Player.getGame().addScore(Integer.parseInt(content),sender_id);
+		}
+
 	}
 
 
 	private void GAME_END_handler() {
-		if(Player.isOwner()) {
-			Player.endGame();
-		}
-//		else {
-//			Player.sendScore();
-//		}
+		Player.sendScore();
 		
 	}
 
@@ -168,13 +163,10 @@ public class PacketHandler  implements Runnable{
 
 
 	private void ROUNDWINNER_handler() {
-		if(player_id!=-1) {
 		if(player_id == sender_id) {
 			Player.setPoints();
 			System.out.println(content);
 		}
-		
-	}
 	}
 
 
@@ -191,9 +183,6 @@ public class PacketHandler  implements Runnable{
 		
 	}
 	}
-
-
-	
 	
 	private void PICKWHITECARD_handler() {
 		if(player_id!=-1) {

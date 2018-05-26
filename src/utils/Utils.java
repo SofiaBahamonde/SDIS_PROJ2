@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class Utils {
@@ -44,5 +45,17 @@ public class Utils {
     	
     	return str;
     }
+    
+
+	public static void sleep(int n) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(n);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 
 }

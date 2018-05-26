@@ -41,11 +41,8 @@ public class Player {
     private static boolean jury = false;
     private static ArrayList<String>answers= new ArrayList<String>();
     private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
-    private static ArrayList<Integer>scores =new ArrayList<Integer>();
-    private static ArrayList<Integer>scores_id =new ArrayList<Integer>();
     private static int points=0;
  
-    
 
 	public static void main(String[] args) throws Exception {
 		String host = Utils.HOST;
@@ -182,14 +179,15 @@ public class Player {
 
 	public static void startRound() {
 		String choosen_card;
-		String winner_card;
+
 		if(jury) {
 			System.out.println("Waiting for Players answers");
 			try {
 				Thread.sleep(10000); 
-				winner_card=GameUI.printAnswers(answers);
-				int i=answers.indexOf(winner_card);
-				int winner_id= answers_id.get(i);
+				
+				int winner_idx =GameUI.printAnswers(answers);
+				int winner_id= answers_id.get(winner_idx-1);
+				
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
 				Thread.sleep(100); 
 				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
@@ -239,31 +237,10 @@ public class Player {
 	public static String getBlackCard() {
 		return cards.drawBlackCard();
 	}
-	public static void endGame() {
-		GameUI.printResults();
-		
-	}
+
+	
 	public static void sendScore() {
 		Player.dispatcher.sendMessage("SCORE", ""+points, player_id);
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} 
-	}
-	public static void addScore(int i, int sender_id) {
-		scores.add(i);
-		scores_id.add(sender_id);
-		if(scores.size()==GameLogic.getNumberPlayers()-1) {
-			scores.add(points);
-			scores_id.add(player_id);
-			int max=Collections.max(scores);
-			System.out.println("THE MAX IS"+ max);
-			int winner_id= scores.indexOf(max);
-			System.out.println("THE Winner IS"+ winner_id);
-			Player.dispatcher.sendMessage("WINNER","you won with "+max+" points",winner_id);
-		}
-			
 	}
 	
 
