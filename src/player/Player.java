@@ -193,6 +193,7 @@ public class Player {
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
 				Utils.sleep(100); 
 				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
+				Utils.sleep(100);
 				
 				
 			} catch (InterruptedException e) {
