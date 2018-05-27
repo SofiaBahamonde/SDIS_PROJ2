@@ -167,12 +167,7 @@ public class PacketHandler  implements Runnable{
 
 
 	private void ROUNDEND_handler() {
-		if(!Player.isJury()) {
-			Player.drawWhiteCard();
-		}
-		else {
-			Player.endJury();
-		}
+		
 		if(Player.isOwner()) {
 			GameLogic.round();
 		}

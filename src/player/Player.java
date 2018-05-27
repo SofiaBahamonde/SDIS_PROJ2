@@ -201,7 +201,7 @@ public class Player {
 				Utils.sleep(100); 
 				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
 				Utils.sleep(100);
-				
+				endJury();
 				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -210,6 +210,7 @@ public class Player {
 			choosen_card=GameUI.makePlay(black_card, white_cards,points);
 			white_cards.remove(choosen_card);
 			dispatcher.sendMessage("PICKWHITECARD", choosen_card, player_id);
+			drawWhiteCard();
 		}
 	}
 
