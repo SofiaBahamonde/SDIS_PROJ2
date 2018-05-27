@@ -91,6 +91,10 @@ public class PacketHandler  implements Runnable{
 			case "SCORE":
 				SCORE_handler();
 				break;
+			
+			case "WINNER":
+				WINNER_handler();
+				break;
 				
 
 
@@ -100,6 +104,17 @@ public class PacketHandler  implements Runnable{
 	}
 	
 		
+
+
+	private void WINNER_handler() {
+		if(content.equals(Player.getName())) {
+			System.out.println("Congrats player "+Player.getName()+ " you are the winner!");
+		}
+		else {
+			System.out.println("Congrats to the player "+content+ ", he is the winner!");
+		}
+		
+	}
 
 
 	private void SCORE_handler() {

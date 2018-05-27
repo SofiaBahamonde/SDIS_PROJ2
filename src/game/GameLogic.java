@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import player.Player;
@@ -75,9 +76,15 @@ public class GameLogic {
 		
 		if(scores.size() == players.size()) {
 			
-			GameUI.printResults(scores,players_scores);
+			int max= Collections.max(scores);
+			int winner_id= scores.indexOf(max);
 			
-			//Player.getDispatcher().sendMessage("WINNER","you won with "+max+" points",winner_id);
+			String winner_name=players_scores.get(winner_id);
+			System.out.println("The winner is "+winner_name + " with " +max+ " points");
+			
+			GameUI.printResults(scores,players_scores);
+			Utils.sleep(100);
+			Player.getDispatcher().sendMessage("WINNER",winner_name,-1);
 		}
 		
 		

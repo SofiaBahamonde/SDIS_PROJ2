@@ -215,6 +215,10 @@ public class Player {
 	public static int getPoints() {
 		return points;
 	}
+	
+	public static String getName() {
+		return username;
+	}
 	public static void setPoints() {
 		
 		points ++;
