@@ -37,7 +37,8 @@ public class Server{
 	
 	public static void addRoom(String name, String password, PlayerInfo owner) {
 		System.out.println("New room created - " + name);
-		rooms.add(new Room(name, password,owner));	
+		Room room = new Room(name, password,owner);
+		rooms.add(room);	
 	}
 
 	public static ArrayList<PlayerInfo> getPlayers() {
@@ -50,7 +51,7 @@ public class Server{
 
 	public static Room getRoom(String room_name) {
 		for(Room r: rooms) {
-			if(r.getName().equals(room_name));
+			if(r.getName().equals(room_name))
 			return r;
 		}
 		

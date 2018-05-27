@@ -148,6 +148,7 @@ public class Player {
                 dispatcher = new MessageDispatcher(Integer.parseInt(port),mcast_addr,secret_key,player_id);
                 new Thread(dispatcher).start();
                 
+                
                 dispatcher.sendMessage("NEWPLAYER",username, player_id);
                 
                 if(owner) 
@@ -156,7 +157,9 @@ public class Player {
                 	ServerUI.ready();
                 	dispatcher.sendMessage("READY",username,player_id);
                 }
+
 	             entered_room=true;
+
             	break;
             	
             default:
