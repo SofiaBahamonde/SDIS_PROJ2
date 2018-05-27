@@ -71,7 +71,6 @@ public class Player {
 			if(entered_room)
 				break;
 		}
-		System.out.println("XAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
 
 		in.close();
 		out.close();
