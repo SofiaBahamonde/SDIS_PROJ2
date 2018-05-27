@@ -64,9 +64,6 @@ public class PacketHandler  implements Runnable{
 				STARTROUND_handler();
 				break;
 				
-			case "WHITECARD":
-				break;
-				
 			case "PICKWHITECARD":
 				PICKWHITECARD_handler();
 				break;

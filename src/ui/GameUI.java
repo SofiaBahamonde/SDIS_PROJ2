@@ -26,12 +26,13 @@ public class GameUI {
 	}
 	
 	
-	public static int printAnswers(ArrayList<String> cards) {
+	public static int printAnswers(ArrayList<String> cards,String black_card ) {
 		int option_int=0;
 		
 		do {
 			System.out.print("\n");
 			System.out.print("\n");
+			System.out.print(black_card);
 			System.out.print("\n");
 			System.out.print("\n");
 			System.out.print("-------- Choose the winner --------\n");

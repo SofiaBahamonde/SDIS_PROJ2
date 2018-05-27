@@ -194,7 +194,7 @@ public class Player {
 			try {
 				Thread.sleep(10000); 
 				
-				int winner_idx =GameUI.printAnswers(answers);
+				int winner_idx =GameUI.printAnswers(answers,black_card);
 				int winner_id= answers_id.get(winner_idx-1);
 				
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
