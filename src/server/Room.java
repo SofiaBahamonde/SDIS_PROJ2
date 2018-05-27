@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 import javax.crypto.SecretKey;
 
-import communication.MessageDispatcher;
-import game.GameLogic;
-
 public class Room{
 	private static int room_counter=0;
 	

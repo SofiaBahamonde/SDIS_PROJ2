@@ -17,6 +17,7 @@ public class GameLogic {
 	
     private static ArrayList<Integer>scores =new ArrayList<Integer>();
     private static ArrayList<String>players_scores =new ArrayList<String>();
+    private static ArrayList<Integer>players_that_answered =new ArrayList<Integer>();
 	
 	public static void start() {
 
@@ -31,6 +32,14 @@ public class GameLogic {
 	
 
 	public static void round() {
+		if(round!=0) {
+			
+			removePlayersNotAnswered();
+			if (jury != players.size()-1)
+				jury++;
+			else
+				jury = 0;
+		}
 		if (round < Utils.MAX_ROUNDS) {
 		// draw black cards
 		String black_card = Player.getBlackCard();
@@ -40,12 +49,7 @@ public class GameLogic {
 
 		// choose jury
 		Player.getDispatcher().sendMessage("NEWJUDGE", "jury", players.get(jury).getPlayerID());
-		if (jury != players.size()-1)
-			jury++;
-		else
-			jury = 0;
-
-		// start round
+			// start round
 		Utils.sleep(100);
 		Player.getDispatcher().sendMessage("START_ROUND", "round", -1);
 		round++;
@@ -54,6 +58,23 @@ public class GameLogic {
 			Player.getDispatcher().sendMessage("GAME_END", "end", -1);
 		}
 	}
+
+	private static void removePlayersNotAnswered() {
+
+		
+		for(int i=0; i<players.size();i++) {
+			if(!players_that_answered.contains(players.get(i).getPlayerID()) && players.get(i).getPlayerID()!=Player.getPlayer_id()&& i!=jury) {
+				System.out.println("PLAYER "+players.get(i).getName()+" REMOVED");
+				players.remove(i);
+				i--;
+			}
+		}
+		players_that_answered=new ArrayList<Integer>();
+		//there is no conditions to continue the game
+		if (players.size() < 3)
+			Player.getDispatcher().sendMessage("ERROR", "error", -1);
+	}
+
 
 	public static void addNewPlayer(PlayerInfo playerInfo) {
 		players.add(playerInfo);
@@ -89,6 +110,10 @@ public class GameLogic {
 		
 		
 			
+	}
+	
+	public void addPlayerAnswered(int player_id) {
+		players_that_answered.add(player_id);
 	}
 
 }

@@ -41,6 +41,7 @@ public class Player {
     private static boolean jury = false;
     private static ArrayList<String>answers= new ArrayList<String>();
     private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
+    private static boolean entered_room=false;
  
     private static int points=0;
  
@@ -65,9 +66,12 @@ public class Player {
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		String request = null;
-		while (((request = in.readLine()) != null)) {
+		while (((request = in.readLine()) != null) && !entered_room) {
 			paseRequest(request);
+			if(entered_room)
+				break;
 		}
+		System.out.println("XAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
 
 		in.close();
 		out.close();
@@ -152,7 +156,7 @@ public class Player {
                 	ServerUI.ready();
                 	dispatcher.sendMessage("READY",username,player_id);
                 }
-	             
+	             entered_room=true;
             	break;
             	
             default:
@@ -197,7 +201,6 @@ public class Player {
 				
 				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else {
@@ -253,9 +256,7 @@ public class Player {
 		
 		Utils.sleep(n);
 		
-		Player.dispatcher.sendMessage("SCORE", username, points);
-		
-		
+		Player.dispatcher.sendMessage("SCORE", username, points);		
 	}
 	
 

@@ -95,9 +95,11 @@ public class PacketHandler  implements Runnable{
 			case "WINNER":
 				WINNER_handler();
 				break;
+			
+			case "ERROR":
+				ERROR_handler();
+				break;
 				
-
-
 		}
 		
 
@@ -106,12 +108,20 @@ public class PacketHandler  implements Runnable{
 		
 
 
+	private void ERROR_handler() {
+	System.out.println("ERROR HAS OCURRED! PLAYERS HAVE DISCONNECTED AND THERE ARE LESS THAN 3 PLAYERS");
+	Player.getDispatcher().endGame();
+	}
+
+
 	private void WINNER_handler() {
 		if(content.equals(Player.getName())) {
 			System.out.println("Congrats player "+Player.getName()+ " you are the winner!");
+			Player.getDispatcher().endGame();
 		}
 		else {
 			System.out.println("Congrats to the player "+content+ ", he is the winner!");
+			Player.getDispatcher().endGame();
 		}
 		
 	}
@@ -192,12 +202,14 @@ public class PacketHandler  implements Runnable{
 	}
 	
 	private void PICKWHITECARD_handler() {
-		if(player_id!=-1) {
+	
 		if(Player.isJury()) {
 			Player.addAnswer(content,sender_id);
 		}
+		if(Player.isOwner()) {
+			Player.getGame().addPlayerAnswered(sender_id);
+		}
 		
-	}
 	}
 	private void MessageExtractor() {
 		

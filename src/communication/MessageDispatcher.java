@@ -24,6 +24,7 @@ public class MessageDispatcher implements Runnable{
 	SecretKey secret_key;
 
 	private int player_id;
+	private boolean game_ended;
 	
 	
 	public MessageDispatcher(int mc_port,String mc_address, SecretKey secret_key, int player_id) {
@@ -31,6 +32,7 @@ public class MessageDispatcher implements Runnable{
 		this.mc_port=mc_port;
 		this.secret_key = secret_key;
 		this.player_id = player_id;
+		this.game_ended=false;
 		
 		
 		try {
@@ -42,6 +44,12 @@ public class MessageDispatcher implements Runnable{
 
 		connect_to_multicast_socket();
 }
+	
+	public void endGame() {
+		this.game_ended=true;
+		System.exit(0);
+		
+	}
 	
 	
 	public void connect_to_multicast_socket() {
@@ -60,7 +68,7 @@ public class MessageDispatcher implements Runnable{
 		byte[] buffer= new byte[Utils.PACKET_SIZE];
 
 		
-		while(true) {
+		while(!game_ended) {
 			DatagramPacket mc_packet = new DatagramPacket(buffer, buffer.length);
 			try {
 				mc_socket.receive(mc_packet);
@@ -70,7 +78,6 @@ public class MessageDispatcher implements Runnable{
 
 			new Thread(new PacketHandler(mc_packet,secret_key,player_id)).start();
 } 
-		
 	}
 
 
