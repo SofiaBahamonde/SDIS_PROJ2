@@ -36,8 +36,7 @@ public class Room{
 		this.mcast_addr = Utils.addresses.get(room_counter);
 		this.port = Utils.ports.get(room_counter);
 		this.secret_key =SecretKeyGenerator.generateSecretKey();
-
-
+		
 		room_counter++;
 
 		
