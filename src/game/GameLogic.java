@@ -1,6 +1,7 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import player.Player;
 import player.PlayerInfo;
@@ -13,6 +14,9 @@ public class GameLogic {
 
 	private static int round = 0;
 	private static int jury = 0;
+	
+    private static ArrayList<Integer>scores =new ArrayList<Integer>();
+    private static ArrayList<String>players_scores =new ArrayList<String>();
 	
 	public static void start() {
 
@@ -46,7 +50,7 @@ public class GameLogic {
 		round++;
 	}
 		else {
-			Player.getDispatcher().sendMessage("GAME_END", "round", -1);
+			Player.getDispatcher().sendMessage("GAME_END", "end", -1);
 		}
 	}
 
@@ -63,13 +67,21 @@ public class GameLogic {
 
 	}
 
-	public static int getNumberPlayers() {
-		return players.size();
-	}
 
-	public void addScore(int score, int player_id) {
-		// TODO Auto-generated method stub
+	public void addScore(String player, int score) {
 		
+		scores.add(score);
+		players_scores.add(player);
+		
+		if(scores.size() == players.size()) {
+			
+			GameUI.printResults(scores,players_scores);
+			
+			//Player.getDispatcher().sendMessage("WINNER","you won with "+max+" points",winner_id);
+		}
+		
+		
+			
 	}
 
 }

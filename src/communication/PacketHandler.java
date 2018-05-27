@@ -10,7 +10,6 @@ import javax.crypto.SecretKey;
 import game.GameLogic;
 import player.Player;
 import player.PlayerInfo;
-import server.Room;
 import utils.AESEncrypter;
 import utils.Utils;
 
@@ -93,34 +92,27 @@ public class PacketHandler  implements Runnable{
 				SCORE_handler();
 				break;
 				
-			case "WINNER":
-				WINNER_handler();
-			break;
+
 
 		}
 		
 
 	}
 	
-	private void WINNER_handler() {
-		if(player_id == sender_id) {
-			System.out.println(content);
-		}
 		
-	}
 
 
 	private void SCORE_handler() {
 		if(Player.isOwner()) {
-			Player.getGame().addScore(Integer.parseInt(content),sender_id);
+			Player.getGame().addScore(content,sender_id);
 		}
+		
 
 	}
 
 
 	private void GAME_END_handler() {
 		Player.sendScore();
-		
 	}
 
 

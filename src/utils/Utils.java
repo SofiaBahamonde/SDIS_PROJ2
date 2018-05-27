@@ -15,7 +15,7 @@ public class Utils {
 	public static String BLACK_CARDS = "../black_cards.txt";
 	public static String WHITE_CARDS =  "../white_cards.txt";
 	
-	public static int MAX_ROUNDS=3;
+	public static int MAX_ROUNDS=1;
 	
     public static ArrayList<Integer> ports = new ArrayList<Integer>(){ 
     private static final long serialVersionUID = 1L;

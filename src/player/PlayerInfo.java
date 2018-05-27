@@ -1,13 +1,11 @@
 package player;
 
-import javax.net.ssl.SSLSocket;
-
 public class PlayerInfo {
 	
 	int id;
 	String username;
 	boolean owner = false;
-	
+	int score =0;
 	
 	
 	
@@ -31,6 +29,10 @@ public class PlayerInfo {
 
 	public int getPlayerID() {
 		return id;
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 

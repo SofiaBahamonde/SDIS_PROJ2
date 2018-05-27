@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Random;
 
 
 
@@ -41,8 +41,10 @@ public class Player {
     private static boolean jury = false;
     private static ArrayList<String>answers= new ArrayList<String>();
     private static ArrayList<Integer>answers_id =new ArrayList<Integer>();
+ 
     private static int points=0;
  
+    
 
 	public static void main(String[] args) throws Exception {
 		String host = Utils.HOST;
@@ -189,7 +191,7 @@ public class Player {
 				int winner_id= answers_id.get(winner_idx-1);
 				
 				dispatcher.sendMessage("ROUNDWINNER","You Won this round! Congrats!",winner_id);
-				Thread.sleep(100); 
+				Utils.sleep(100); 
 				dispatcher.sendMessage("ROUNDEND", "round ended", player_id);
 				
 				
@@ -240,7 +242,15 @@ public class Player {
 
 	
 	public static void sendScore() {
-		Player.dispatcher.sendMessage("SCORE", ""+points, player_id);
+		Random rand = new Random();
+
+		int  n = rand.nextInt(100) + 1;
+		
+		Utils.sleep(n);
+		
+		Player.dispatcher.sendMessage("SCORE", username, points);
+		
+		
 	}
 	
 

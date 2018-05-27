@@ -65,9 +65,16 @@ public class GameUI {
 	}
 
 
-	public static void printResults() {
+
+	public static void printResults(ArrayList<Integer> scores, ArrayList<String> players_scores) {
 		System.out.println("GAME ENDED");
 		System.out.println("------ SCORES ------");
+		
+		for(int i =0; i<scores.size(); i++) {
+			System.out.println(players_scores.get(i) + " - " + scores.get(i));
+		}
+	
+		
 	}
 	
 	
