@@ -43,6 +43,7 @@ public class GameLogic {
 		if (round < Utils.MAX_ROUNDS) {
 		// draw black cards
 		String black_card = Player.getBlackCard();
+		Utils.sleep(100);
 		Player.getDispatcher().sendMessage("BLACKCARD", black_card, -1);
 
 		Utils.sleep(100);
